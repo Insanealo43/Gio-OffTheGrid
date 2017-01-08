@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2EC6B527F71D5AA6325BCCBF /* Pods_Gio_OffTheGridTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9E5DDB0C66C8C7E175D391 /* Pods_Gio_OffTheGridTests.framework */; };
 		4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */; };
+		495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E11E22C38600FF23A5 /* OTGManager.swift */; };
 		4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */; };
 		4965404E1E21E6DD00A5AC37 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404D1E21E6DD00A5AC37 /* FirstViewController.swift */; };
 		496540501E21E6DD00A5AC37 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404F1E21E6DD00A5AC37 /* SecondViewController.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGridUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		495049E11E22C38600FF23A5 /* OTGManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGManager.swift; sourceTree = "<group>"; };
 		496540481E21E6DD00A5AC37 /* Gio-OffTheGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gio-OffTheGrid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4965404D1E21E6DD00A5AC37 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		4908EAEE1E21E7B8002BFE2D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				495049E11E22C38600FF23A5 /* OTGManager.swift */,
 				4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */,
 			);
 			name = Networking;
@@ -463,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */,
+				495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */,
 				496540501E21E6DD00A5AC37 /* SecondViewController.swift in Sources */,
 				4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */,
 				4965404E1E21E6DD00A5AC37 /* FirstViewController.swift in Sources */,
