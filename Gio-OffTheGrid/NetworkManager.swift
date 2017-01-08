@@ -12,37 +12,16 @@ import Alamofire
 class NetworkManager {
     static let sharedInstance = NetworkManager()
     
-    func testRequest() {
-        Alamofire.request("https://httpbin.org/get", method: .get, parameters: [:], headers: [:]).validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Validation Successful! \nJSON: \(response.result.value ?? [:])")
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func request(url:String, method:HTTPMethod? = .get, parameters:[String:AnyObject]? = [:], handler: (([String:AnyObject]) -> Void)? = nil) {
+    func request(url:String, method:HTTPMethod? = .get, parameters:[String:AnyObject]? = [:], handler: (([String:AnyObject]?) -> Void)? = nil) {
         Alamofire.request(url, method: method!, parameters: parameters).validate().responseJSON { response in
-            print("Finished Request: \(response.request)")
+            let JSON = (response.result.value as? [String:AnyObject] ?? [:])
             switch response.result {
-            case .success:
-                print("Validation Successful! \nJSON: \(response.result.value ?? [:])")
             case .failure(let error):
-                print(error)
+                print("NetworkManager: Request Error: \(error)")
+                handler?(nil)
+            case .success:
+                handler?(JSON)
             }
         }
-        
-        
-        /*Alamofire.request(url, method: method, parameters: parameters, headers: headers).validate().responseJSON { response in
-            print("Finished Request: \(response.request)")
-            switch response.result {
-            case .success:
-                print("Validation Successful! \nJSON: \(response.result.value ?? [:])")
-            case .failure(let error):
-                print(error)
-            }
-        }*/
     }
 }

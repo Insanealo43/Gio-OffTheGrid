@@ -17,18 +17,41 @@ class OTGManager {
     static let sharedInstance = OTGManager()
     
     internal enum Constants {
-        static let OTG_FBAccessToken = "211025409359530|87a273cbaaf2364e16652a4d6a0b2111"
-        static let Key_access_token = "access_token"
+        static let FBAppId = "211025409359530"
+        static let FBAppSecret = "87a273cbaaf2364e16652a4d6a0b2111"
+        static let FBAccessToken = "\(Constants.FBAppId)|\(Constants.FBAppSecret)"
+    }
+    
+    internal enum Keys {
+        static let accessToken = "access_token"
+        static let sortOrder = "sort-order"
+        static let nameAscending = "name-asc"
+    }
+    
+    internal enum JSON {
+        static let data = "data"
+        static let vendors = "Vendors"
     }
     
     func fetchEvents() {
         let eventsUrl = OffTheGridUrls.FBGraphOTGEvents.rawValue
-        let parameters = [Constants.Key_access_token: Constants.OTG_FBAccessToken as AnyObject]
+        let params = [Keys.accessToken: Constants.FBAccessToken as AnyObject]
         
-        NetworkManager.sharedInstance.request(url: eventsUrl, parameters: parameters)
+        NetworkManager.sharedInstance.request(url: eventsUrl, parameters: params, handler: { response in
+            if let eventsJSON = response?[JSON.data] as? [AnyObject] {
+                print("OTG Events JSON --> \(eventsJSON)")
+            }
+        })
     }
     
     func fetchVendors() {
+        let vendorsUrl = OffTheGridUrls.OTGVendors.rawValue
+        let params = [Keys.sortOrder: Keys.nameAscending as AnyObject]
         
+        NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
+            if let vendorsJSON = response?[JSON.vendors] as? [AnyObject] {
+                print("OTG Vendors JSON --> \(vendorsJSON)")
+            }
+        })
     }
 }
