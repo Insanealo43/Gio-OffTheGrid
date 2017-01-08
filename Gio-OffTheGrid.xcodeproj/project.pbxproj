@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EC6B527F71D5AA6325BCCBF /* Pods_Gio_OffTheGridTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9E5DDB0C66C8C7E175D391 /* Pods_Gio_OffTheGridTests.framework */; };
+		4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */; };
 		4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */; };
 		4965404E1E21E6DD00A5AC37 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404D1E21E6DD00A5AC37 /* FirstViewController.swift */; };
 		496540501E21E6DD00A5AC37 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404F1E21E6DD00A5AC37 /* SecondViewController.swift */; };
@@ -15,6 +17,8 @@
 		496540581E21E6DD00A5AC37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 496540561E21E6DD00A5AC37 /* LaunchScreen.storyboard */; };
 		496540631E21E6DD00A5AC37 /* Gio_OffTheGridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496540621E21E6DD00A5AC37 /* Gio_OffTheGridTests.swift */; };
 		4965406E1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965406D1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift */; };
+		BC122D68F34B78E6B0FA72AB /* Pods_Gio_OffTheGrid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C998F9378F30140218A4CCCB /* Pods_Gio_OffTheGrid.framework */; };
+		F498F644DA2C93DA8A174A12 /* Pods_Gio_OffTheGridUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGridUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		496540481E21E6DD00A5AC37 /* Gio-OffTheGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gio-OffTheGrid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4965404D1E21E6DD00A5AC37 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +55,14 @@
 		496540691E21E6DD00A5AC37 /* Gio-OffTheGridUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Gio-OffTheGridUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4965406D1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gio_OffTheGridUITests.swift; sourceTree = "<group>"; };
 		4965406F1E21E6DD00A5AC37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C75648E7F18152A330BD5AA /* Pods-Gio-OffTheGrid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGrid.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGrid/Pods-Gio-OffTheGrid.debug.xcconfig"; sourceTree = "<group>"; };
+		7613AD0F483D0EE0C600EBF2 /* Pods-Gio-OffTheGridUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridUITests/Pods-Gio-OffTheGridUITests.release.xcconfig"; sourceTree = "<group>"; };
+		917BC1F9C9655DB88CEA538E /* Pods-Gio-OffTheGridTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridTests/Pods-Gio-OffTheGridTests.release.xcconfig"; sourceTree = "<group>"; };
+		BA9E5DDB0C66C8C7E175D391 /* Pods_Gio_OffTheGridTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGridTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF168667C4A11273746178C9 /* Pods-Gio-OffTheGridUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridUITests/Pods-Gio-OffTheGridUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BF17FF93D32FD1B134F3E005 /* Pods-Gio-OffTheGridTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridTests/Pods-Gio-OffTheGridTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C998F9378F30140218A4CCCB /* Pods_Gio_OffTheGrid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGrid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE2DE55746E0196ECDF99144 /* Pods-Gio-OffTheGrid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGrid.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGrid/Pods-Gio-OffTheGrid.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC122D68F34B78E6B0FA72AB /* Pods_Gio_OffTheGrid.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC6B527F71D5AA6325BCCBF /* Pods_Gio_OffTheGridTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +86,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F498F644DA2C93DA8A174A12 /* Pods_Gio_OffTheGridUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28C43350C961C39CB270DC35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C998F9378F30140218A4CCCB /* Pods_Gio_OffTheGrid.framework */,
+				BA9E5DDB0C66C8C7E175D391 /* Pods_Gio_OffTheGridTests.framework */,
+				0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4908EAEE1E21E7B8002BFE2D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		4965403F1E21E6DD00A5AC37 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +118,8 @@
 				496540611E21E6DD00A5AC37 /* Gio-OffTheGridTests */,
 				4965406C1E21E6DD00A5AC37 /* Gio-OffTheGridUITests */,
 				496540491E21E6DD00A5AC37 /* Products */,
+				F2C87C90CA809FB84A05A8CE /* Pods */,
+				28C43350C961C39CB270DC35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +136,7 @@
 		4965404A1E21E6DD00A5AC37 /* Gio-OffTheGrid */ = {
 			isa = PBXGroup;
 			children = (
+				4908EAEE1E21E7B8002BFE2D /* Networking */,
 				4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */,
 				4965404D1E21E6DD00A5AC37 /* FirstViewController.swift */,
 				4965404F1E21E6DD00A5AC37 /* SecondViewController.swift */,
@@ -128,6 +166,19 @@
 			path = "Gio-OffTheGridUITests";
 			sourceTree = "<group>";
 		};
+		F2C87C90CA809FB84A05A8CE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C75648E7F18152A330BD5AA /* Pods-Gio-OffTheGrid.debug.xcconfig */,
+				EE2DE55746E0196ECDF99144 /* Pods-Gio-OffTheGrid.release.xcconfig */,
+				BF17FF93D32FD1B134F3E005 /* Pods-Gio-OffTheGridTests.debug.xcconfig */,
+				917BC1F9C9655DB88CEA538E /* Pods-Gio-OffTheGridTests.release.xcconfig */,
+				BF168667C4A11273746178C9 /* Pods-Gio-OffTheGridUITests.debug.xcconfig */,
+				7613AD0F483D0EE0C600EBF2 /* Pods-Gio-OffTheGridUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +186,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 496540721E21E6DD00A5AC37 /* Build configuration list for PBXNativeTarget "Gio-OffTheGrid" */;
 			buildPhases = (
+				E2D000BD4350F40F6CB80D01 /* [CP] Check Pods Manifest.lock */,
 				496540441E21E6DD00A5AC37 /* Sources */,
 				496540451E21E6DD00A5AC37 /* Frameworks */,
 				496540461E21E6DD00A5AC37 /* Resources */,
+				103FFEA00F982601F897698C /* [CP] Embed Pods Frameworks */,
+				0BB162F16326AECCCCE05427 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -152,9 +206,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 496540751E21E6DD00A5AC37 /* Build configuration list for PBXNativeTarget "Gio-OffTheGridTests" */;
 			buildPhases = (
+				0C2F80E495A510A298FE3B4D /* [CP] Check Pods Manifest.lock */,
 				4965405A1E21E6DD00A5AC37 /* Sources */,
 				4965405B1E21E6DD00A5AC37 /* Frameworks */,
 				4965405C1E21E6DD00A5AC37 /* Resources */,
+				001E1820EBEE42E60722E9F7 /* [CP] Embed Pods Frameworks */,
+				898986AD2CCF068754DF67B4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,9 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 496540781E21E6DD00A5AC37 /* Build configuration list for PBXNativeTarget "Gio-OffTheGridUITests" */;
 			buildPhases = (
+				6BFA7728EC31ADB163692F38 /* [CP] Check Pods Manifest.lock */,
 				496540651E21E6DD00A5AC37 /* Sources */,
 				496540661E21E6DD00A5AC37 /* Frameworks */,
 				496540671E21E6DD00A5AC37 /* Resources */,
+				A220F1567E6C70C5A0785312 /* [CP] Embed Pods Frameworks */,
+				E2C35D2B4E20939984912075 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,7 +256,6 @@
 				TargetAttributes = {
 					496540471E21E6DD00A5AC37 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 334C9KDJCL;
 						ProvisioningStyle = Automatic;
 					};
 					4965405D1E21E6DD00A5AC37 = {
@@ -260,11 +319,150 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		001E1820EBEE42E60722E9F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGridTests/Pods-Gio-OffTheGridTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0BB162F16326AECCCCE05427 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGrid/Pods-Gio-OffTheGrid-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0C2F80E495A510A298FE3B4D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		103FFEA00F982601F897698C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGrid/Pods-Gio-OffTheGrid-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BFA7728EC31ADB163692F38 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		898986AD2CCF068754DF67B4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGridTests/Pods-Gio-OffTheGridTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A220F1567E6C70C5A0785312 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGridUITests/Pods-Gio-OffTheGridUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2C35D2B4E20939984912075 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gio-OffTheGridUITests/Pods-Gio-OffTheGridUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2D000BD4350F40F6CB80D01 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		496540441E21E6DD00A5AC37 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */,
 				496540501E21E6DD00A5AC37 /* SecondViewController.swift in Sources */,
 				4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */,
 				4965404E1E21E6DD00A5AC37 /* FirstViewController.swift in Sources */,
@@ -417,9 +615,10 @@
 		};
 		496540731E21E6DD00A5AC37 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C75648E7F18152A330BD5AA /* Pods-Gio-OffTheGrid.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 334C9KDJCL;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Gio-OffTheGrid/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ALV.Gio-OffTheGrid";
@@ -430,9 +629,10 @@
 		};
 		496540741E21E6DD00A5AC37 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE2DE55746E0196ECDF99144 /* Pods-Gio-OffTheGrid.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 334C9KDJCL;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Gio-OffTheGrid/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ALV.Gio-OffTheGrid";
@@ -443,6 +643,7 @@
 		};
 		496540761E21E6DD00A5AC37 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF17FF93D32FD1B134F3E005 /* Pods-Gio-OffTheGridTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -458,6 +659,7 @@
 		};
 		496540771E21E6DD00A5AC37 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 917BC1F9C9655DB88CEA538E /* Pods-Gio-OffTheGridTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -473,6 +675,7 @@
 		};
 		496540791E21E6DD00A5AC37 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF168667C4A11273746178C9 /* Pods-Gio-OffTheGridUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 334C9KDJCL;
@@ -487,6 +690,7 @@
 		};
 		4965407A1E21E6DD00A5AC37 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7613AD0F483D0EE0C600EBF2 /* Pods-Gio-OffTheGridUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 334C9KDJCL;
@@ -518,6 +722,7 @@
 				496540741E21E6DD00A5AC37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		496540751E21E6DD00A5AC37 /* Build configuration list for PBXNativeTarget "Gio-OffTheGridTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +731,7 @@
 				496540771E21E6DD00A5AC37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		496540781E21E6DD00A5AC37 /* Build configuration list for PBXNativeTarget "Gio-OffTheGridUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +740,7 @@
 				4965407A1E21E6DD00A5AC37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
