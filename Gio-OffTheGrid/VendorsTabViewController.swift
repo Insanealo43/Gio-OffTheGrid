@@ -19,7 +19,10 @@ class VendorsTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showHUD()
+        if self.vendors.count == 0 {
+            self.showHUD()
+        }
+        
         OTGManager.sharedInstance.fetchVendors{ _ in
             self.hideHUD()
             self.collectionView.reloadData()

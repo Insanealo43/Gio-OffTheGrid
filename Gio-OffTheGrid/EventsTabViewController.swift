@@ -10,13 +10,20 @@ import UIKit
 
 class EventsTabViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    internal var markets: JSONObjectArray {
+        get {
+            return OTGManager.sharedInstance.markets
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.sectionHeaderHeight = 44.0
         
-        self.showHUD()
+        if self.markets.count == 0 {
+            self.showHUD()
+        }
+        
         OTGManager.sharedInstance.fetchMarkets{ _ in
             self.hideHUD()
             self.tableView.reloadData()
@@ -41,18 +48,18 @@ class EventsTabViewController: UIViewController {
 
 extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return OTGManager.sharedInstance.markets.count
+        return self.markets.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let marketCell = tableView.dequeueReusableCell(withIdentifier: "marketCell") as! MarketHeaderTableViewCell
-        let market = OTGManager.sharedInstance.markets[section]
+        let market = self.markets[section]
         marketCell.market = market
         return marketCell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let market = OTGManager.sharedInstance.markets[section]
+        let market = self.markets[section]
         let events = market["Event"] as? JSONObjectArray ?? []
         return events.count
     }
@@ -60,7 +67,7 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let eventCell = tableView.dequeueReusableCell(withIdentifier: "marketEventCell", for: indexPath) as! MarketEventTableViewCell
         
-        let market = OTGManager.sharedInstance.markets[indexPath.section]
+        let market = self.markets[indexPath.section]
         let event = (market["Event"] as? JSONObjectArray)?[indexPath.row]
         eventCell.marketEvent = event
         
@@ -70,7 +77,7 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let market = OTGManager.sharedInstance.markets[indexPath.section]
+        let market = self.markets[indexPath.section]
         let event = (market["Event"] as? JSONObjectArray)?[indexPath.row]
         self.performSegue(withIdentifier: "showEventVendors", sender: event)
     }

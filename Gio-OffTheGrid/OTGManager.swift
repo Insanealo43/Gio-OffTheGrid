@@ -182,11 +182,14 @@ class OTGManager {
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
+            // Keep local copy of the vendors
             if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                self.vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
+                let vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
+                self.vendors = vendors
+                
+                // Cache the vendors
+                PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.vendors: vendors as AnyObject], with: CacheKeys.vendors)
             }
-            
-            //print("OTG Vendors(\(self.vendors.count), VendorsJSON: \(self.vendors))")
             handler?(self.vendors)
         })
     }
@@ -209,8 +212,13 @@ class OTGManager {
                       Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
+            // Keep local copy of the markets
             let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
             self.markets = markets
+            
+            // Cache the markets
+            PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
+            
             handler?(markets)
         })
     }

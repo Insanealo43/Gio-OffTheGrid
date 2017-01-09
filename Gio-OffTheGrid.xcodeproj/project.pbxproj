@@ -21,6 +21,7 @@
 		495049F91E23B7AA00FF23A5 /* EventVendorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049F81E23B7AA00FF23A5 /* EventVendorCollectionViewCell.swift */; };
 		495049FC1E23BAEB00FF23A5 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049FB1E23BAEB00FF23A5 /* CircularImageView.swift */; };
 		495049FE1E23DBAF00FF23A5 /* VendorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049FD1E23DBAF00FF23A5 /* VendorCollectionViewCell.swift */; };
+		49504A021E23F07F00FF23A5 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49504A011E23F07F00FF23A5 /* PersistanceManager.swift */; };
 		4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */; };
 		496540531E21E6DD00A5AC37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 496540511E21E6DD00A5AC37 /* Main.storyboard */; };
 		496540551E21E6DD00A5AC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 496540541E21E6DD00A5AC37 /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		495049F81E23B7AA00FF23A5 /* EventVendorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVendorCollectionViewCell.swift; sourceTree = "<group>"; };
 		495049FB1E23BAEB00FF23A5 /* CircularImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		495049FD1E23DBAF00FF23A5 /* VendorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorCollectionViewCell.swift; sourceTree = "<group>"; };
+		49504A011E23F07F00FF23A5 /* PersistanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		496540481E21E6DD00A5AC37 /* Gio-OffTheGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gio-OffTheGrid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		496540521E21E6DD00A5AC37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,13 +125,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4908EAEE1E21E7B8002BFE2D /* Networking */ = {
+		4908EAEE1E21E7B8002BFE2D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				495049E11E22C38600FF23A5 /* OTGManager.swift */,
 				4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */,
+				49504A011E23F07F00FF23A5 /* PersistanceManager.swift */,
 			);
-			name = Networking;
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		495049E31E235A7A00FF23A5 /* Tabs */ = {
@@ -207,7 +210,7 @@
 			children = (
 				495049EB1E236C4E00FF23A5 /* Extensions */,
 				495049FA1E23BAD600FF23A5 /* Subclasses */,
-				4908EAEE1E21E7B8002BFE2D /* Networking */,
+				4908EAEE1E21E7B8002BFE2D /* Managers */,
 				495049E31E235A7A00FF23A5 /* Tabs */,
 				4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */,
 				496540511E21E6DD00A5AC37 /* Main.storyboard */,
@@ -532,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49504A021E23F07F00FF23A5 /* PersistanceManager.swift in Sources */,
 				495049FE1E23DBAF00FF23A5 /* VendorCollectionViewCell.swift in Sources */,
 				4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */,
 				495049F61E23B52800FF23A5 /* EventVendorsFlowLayout.swift in Sources */,

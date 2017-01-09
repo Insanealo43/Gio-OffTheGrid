@@ -10,6 +10,24 @@ import UIKit
 import SDWebImage
 import MBProgressHUD
 
+extension String {
+    var isoDate: Date? {
+        return Date.isoFormatter.date(from: self)
+    }
+}
+
+extension UIViewController {
+    func showHUD() {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+    }
+    
+    func hideHUD() {
+        DispatchQueue.main.async {
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
+}
+
 extension Date {
     static let isoFormatter = ISO8601DateFormatter()
     
@@ -57,24 +75,6 @@ extension Date {
             timeComponents.append(period)
         }
         return timeComponents.joined(separator: " ")
-    }
-}
-
-extension String {
-    var isoDate: Date? {
-        return Date.isoFormatter.date(from: self)
-    }
-}
-
-extension UIViewController {
-    func showHUD() {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-    }
-    
-    func hideHUD() {
-        DispatchQueue.main.async {
-            MBProgressHUD.hide(for: self.view, animated: true)
-        }
     }
 }
 
