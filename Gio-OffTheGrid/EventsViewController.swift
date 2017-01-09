@@ -1,5 +1,5 @@
 //
-//  OTGEventsViewController.swift
+//  EventsViewController.swift
 //  Gio-OffTheGrid
 //
 //  Created by Andrew Lopez-Vass on 1/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OTGEventsViewController: UIViewController {
+class EventsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var upcomingEvents = JSONObjectArray()
     
@@ -23,7 +23,7 @@ class OTGEventsViewController: UIViewController {
     }
 }
 
-extension OTGEventsViewController: UITableViewDataSource, UITableViewDelegate {
+extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return upcomingEvents.count
     }
@@ -33,7 +33,7 @@ extension OTGEventsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let eventCell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! OTGEventTableViewCell
+        let eventCell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventTableViewCell
         eventCell.event = upcomingEvents[indexPath.row]
         
         return eventCell

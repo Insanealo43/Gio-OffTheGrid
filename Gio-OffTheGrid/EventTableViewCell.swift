@@ -1,5 +1,5 @@
 //
-//  OTGEventTableViewCell.swift
+//  EventTableViewCell.swift
 //  Gio-OffTheGrid
 //
 //  Created by Andrew Lopez-Vass on 1/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OTGEventTableViewCell: UITableViewCell {
+class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -33,19 +33,5 @@ class OTGEventTableViewCell: UITableViewCell {
             
             infoLabel.text = components.joined(separator: " · ")
         }
-    }
-    
-    /*override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        let selectionView = UIView()
-        selectionView.backgroundColor = UIColor.red
-        OTGEventTableViewCell.appearance().selectedBackgroundView = selectionView
-    }*/
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 }
