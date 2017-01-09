@@ -1,5 +1,5 @@
 //
-//  EventsViewController.swift
+//  EventsTabViewController.swift
 //  Gio-OffTheGrid
 //
 //  Created by Andrew Lopez-Vass on 1/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventsViewController: UIViewController {
+class EventsTabViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class EventsViewController: UIViewController {
     }
 }
 
-extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
+extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return OTGManager.sharedInstance.markets.count
     }

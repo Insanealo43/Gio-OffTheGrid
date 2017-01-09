@@ -10,8 +10,8 @@
 		2EC6B527F71D5AA6325BCCBF /* Pods_Gio_OffTheGridTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9E5DDB0C66C8C7E175D391 /* Pods_Gio_OffTheGridTests.framework */; };
 		4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */; };
 		495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E11E22C38600FF23A5 /* OTGManager.swift */; };
-		495049E51E235A9500FF23A5 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E41E235A9500FF23A5 /* EventsViewController.swift */; };
-		495049E71E235AB000FF23A5 /* VendorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E61E235AB000FF23A5 /* VendorsViewController.swift */; };
+		495049E51E235A9500FF23A5 /* EventsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E41E235A9500FF23A5 /* EventsTabViewController.swift */; };
+		495049E71E235AB000FF23A5 /* VendorsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E61E235AB000FF23A5 /* VendorsTabViewController.swift */; };
 		495049EA1E2367CA00FF23A5 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E91E2367CA00FF23A5 /* EventTableViewCell.swift */; };
 		495049ED1E236C7A00FF23A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049EC1E236C7A00FF23A5 /* Extensions.swift */; };
 		495049EF1E239F5A00FF23A5 /* MarketHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049EE1E239F5A00FF23A5 /* MarketHeaderTableViewCell.swift */; };
@@ -51,8 +51,8 @@
 		0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGridUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		495049E11E22C38600FF23A5 /* OTGManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		495049E41E235A9500FF23A5 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
-		495049E61E235AB000FF23A5 /* VendorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorsViewController.swift; sourceTree = "<group>"; };
+		495049E41E235A9500FF23A5 /* EventsTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTabViewController.swift; sourceTree = "<group>"; };
+		495049E61E235AB000FF23A5 /* VendorsTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorsTabViewController.swift; sourceTree = "<group>"; };
 		495049E91E2367CA00FF23A5 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		495049EC1E236C7A00FF23A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		495049EE1E239F5A00FF23A5 /* MarketHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -135,8 +135,8 @@
 			children = (
 				495049F71E23B78100FF23A5 /* TableViews */,
 				495049E81E2367B200FF23A5 /* CollectionViews */,
-				495049E41E235A9500FF23A5 /* EventsViewController.swift */,
-				495049E61E235AB000FF23A5 /* VendorsViewController.swift */,
+				495049E41E235A9500FF23A5 /* EventsTabViewController.swift */,
+				495049E61E235AB000FF23A5 /* VendorsTabViewController.swift */,
 				495049F21E23B35E00FF23A5 /* EventVendorsViewController.swift */,
 			);
 			name = Tabs;
@@ -534,10 +534,10 @@
 				495049EA1E2367CA00FF23A5 /* EventTableViewCell.swift in Sources */,
 				495049EF1E239F5A00FF23A5 /* MarketHeaderTableViewCell.swift in Sources */,
 				495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */,
-				495049E71E235AB000FF23A5 /* VendorsViewController.swift in Sources */,
+				495049E71E235AB000FF23A5 /* VendorsTabViewController.swift in Sources */,
 				495049F11E23A55900FF23A5 /* MarketEventTableViewCell.swift in Sources */,
 				495049F31E23B35E00FF23A5 /* EventVendorsViewController.swift in Sources */,
-				495049E51E235A9500FF23A5 /* EventsViewController.swift in Sources */,
+				495049E51E235A9500FF23A5 /* EventsTabViewController.swift in Sources */,
 				4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */,
 				495049F91E23B7AA00FF23A5 /* VendorCollectionViewCell.swift in Sources */,
 				495049FC1E23BAEB00FF23A5 /* CircularImageView.swift in Sources */,

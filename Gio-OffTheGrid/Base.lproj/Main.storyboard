@@ -16,7 +16,7 @@
         <!--Events-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController storyboardIdentifier="EventsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="EventsViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EventsTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="EventsTabViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -253,7 +253,7 @@
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
-        <!--Event Vendors View Controller-->
+        <!--Vendors-->
         <scene sceneID="vZy-uT-3A6">
             <objects>
                 <viewController storyboardIdentifier="EventVendorsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pji-Py-zXE" customClass="EventVendorsViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
@@ -311,19 +311,19 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAu-wB-vkB">
                                                     <rect key="frame" x="0.0" y="135" width="180" height="45"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="78B-Ij-fBl">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="78B-Ij-fBl">
                                                             <rect key="frame" x="8" y="4" width="164" height="37"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Brothers Kitchen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfl-ac-jUw">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="164" height="19"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="164" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asian Fusion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1nl-i3-hJq">
-                                                                    <rect key="frame" x="0.0" y="23" width="164" height="14"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
+                                                                    <rect key="frame" x="0.0" y="21" width="164" height="16"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                                    <color key="textColor" red="0.40392156862745099" green="0.78823529411764703" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -371,6 +371,8 @@
                             <constraint firstItem="van-6b-QKb" firstAttribute="width" secondItem="2D7-4e-eWK" secondAttribute="width" id="vpj-gO-6NB"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Vendors" id="G2a-oo-nMI"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="van-6b-QKb" id="j36-k6-TH5"/>
                     </connections>
@@ -382,7 +384,7 @@
         <!--Vendors-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController storyboardIdentifier="VendorsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8rJ-Kc-sve" customClass="VendorsViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VendorsTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8rJ-Kc-sve" customClass="VendorsTabViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>

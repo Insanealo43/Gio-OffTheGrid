@@ -1,5 +1,5 @@
 //
-//  VendorsViewController.swift
+//  VendorsTabViewController.swift
 //  Gio-OffTheGrid
 //
 //  Created by Andrew Lopez-Vass on 1/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VendorsViewController: UIViewController {
+class VendorsTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
