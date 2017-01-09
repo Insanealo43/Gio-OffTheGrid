@@ -56,6 +56,8 @@ class OTGManager {
         }
     }
     
+    var eventMarketMap = [String:JSONObject]()
+    
     var upcomingEvents = JSONObjectArray() {
         willSet {
             print("Upcoming Events(\(newValue.count)): \(newValue)")
@@ -63,8 +65,6 @@ class OTGManager {
             print("Times: \(newValue.map({ $0[Constants.Keys.startTime]! }))")
         }
     }
-    
-    var eventMarketMap = [String:JSONObject]()
     
     var markets = JSONObjectArray() {
         willSet {
