@@ -17,6 +17,14 @@ public enum CacheKeys {
 
 class PersistanceManager {
     static let sharedInstance = PersistanceManager()
+    internal enum Constants {
+        enum Relations {
+            static let vendorIdToEventId = "vendorId-->eventId"
+            static let eventIdToJSON = "eventId-->eventJSON"
+        }
+        
+        static let maxDayLimit = 30
+    }
     internal enum Relations {
         static let vendorIdToEventId = "vendorId-->eventId"
         static let eventIdToJSON = "eventId-->eventJSON"
@@ -25,6 +33,7 @@ class PersistanceManager {
     var vendorIdToEventIdMap = [String:String]()
     var eventIdtoEventJSONMap = [String:JSONObject]()
     
+    internal var currentDate = Calendar.current.startOfDay(for: Date())
     internal var storedMarketsJSON = JSONObject()
     internal var storedEventsJSON = JSONObject()
     internal var storedVendorsJSON = JSONObject()
@@ -97,6 +106,35 @@ class PersistanceManager {
     
     // MARK - Helpers
     internal func cleanCache() {
-        
+        Array(self.eventIdtoEventJSONMap.values).forEach({
+            if let eventId = $0["id"] as? String {
+                if self.shouldClear(event: $0) {
+                    // Remove all vendorIds mapped to invalid eventId
+                    let vendorIds = self.vendorIdToEventIdMap.keysForValue(value: eventId)
+                    
+                    vendorIds.forEach({
+                        self.vendorIdToEventIdMap.removeValue(forKey: String($0))
+                    })
+                    
+                    // Remove the invalid event
+                    self.eventIdtoEventJSONMap.removeValue(forKey: eventId)
+                }
+            }
+        })
+    }
+    
+    internal func shouldClear(event: JSONObject) -> Bool {
+        if let monthDay = event["month_day"] as? String {
+            let components = monthDay.components(separatedBy: ".")
+            if let monthInt = Int(components.first ?? "-1"),
+                let dayInt = Int(components.last ?? "-1") {
+                
+                let startDate = DateComponents.localComponents.date(monthInt: monthInt, dayInt: dayInt)
+                if let numDays = startDate?.numberDaysUpTo(futureDate: self.currentDate) {
+                    return numDays > 0 && numDays <= Constants.maxDayLimit
+                }
+            }
+        }
+        return true
     }
 }

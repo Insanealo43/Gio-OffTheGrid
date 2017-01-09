@@ -46,6 +46,11 @@ extension Date {
         return formatter
     }()
     
+    var monthNumber: String? {
+        Date.localFormatter.dateFormat = "MM"
+        return Date.localFormatter.string(from: self)
+    }
+    
     var monthAbbrevation: String? {
         Date.localFormatter.dateFormat = "MMM"
         return Date.localFormatter.string(from: self)
@@ -83,6 +88,26 @@ extension Date {
             timeComponents.append(period)
         }
         return timeComponents.joined(separator: " ")
+    }
+    
+    func numberDaysUpTo(futureDate: Date) -> Int {
+        let components = Calendar.current.dateComponents([.day], from: self, to: futureDate)
+        return components.day ?? -1
+    }
+}
+
+extension DateComponents {
+    static var localComponents: DateComponents = {
+        var components = DateComponents()
+        components.calendar = Calendar.current
+        return components
+    }()
+    
+    func date(monthInt: Int, dayInt: Int) -> Date? {
+        var components = DateComponents.localComponents
+        components.month = monthInt
+        components.day = dayInt
+        return components.date
     }
 }
 
