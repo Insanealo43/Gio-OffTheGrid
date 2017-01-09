@@ -8,22 +8,21 @@
 
 import UIKit
 
+// https://offthegrid.com/otg-api/passthrough/events/334414110278817.json
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         OTGManager.sharedInstance.fetchUpcomingEvents { events in
-            print("OTG Events(\(events.count)): \(events)")
+            print("OTG Events(\(events.count))") //: \(events)")
+            events.forEach({event in
+                print("Event(id:\(event["id"] as? String ?? "<NULL>")) Start Time >>> \(event["start_time"] as? String ?? "<NULL>")")
+            })
         }
-        
-        /*OTGManager.sharedInstance.fetchEvents{ events, next in
-            print("After Paging Cursor >>> \(next ?? "<NULL>")")
-        }
-        OTGManager.sharedInstance.fetchVendors()*/
         
         return true
     }

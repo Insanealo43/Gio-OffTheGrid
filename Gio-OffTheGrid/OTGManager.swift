@@ -10,8 +10,10 @@ import Foundation
 
 public enum OffTheGrid {
     enum Urls: String {
-        case OTGVendors = "https://www.offthegridmarkets.com/api/v1.0/vendors.json"
-        case FBGraphOTGEvents = "https://graph.facebook.com/v2.8/OffTheGridSF/events"
+        case Vendors = "https://www.offthegridmarkets.com/api/v1.0/vendors.json"
+        case Events = "https://graph.facebook.com/v2.8/OffTheGridSF/events"
+        case VendorDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
+        case Market
     }
     
     enum Facebook {
@@ -45,10 +47,9 @@ class OTGManager {
     
     // MARK - Events
     func fetchEvents(nextPagingCursor:String? = nil, handler: @escaping (_ events:JSONObjectArray, _ afterPagingCursor:String?) -> Void) {
-        let eventsUrl = OffTheGrid.Urls.FBGraphOTGEvents.rawValue
+        let eventsUrl = OffTheGrid.Urls.Events.rawValue
         var params = [Constants.Keys.accessToken: OffTheGrid.Facebook.AccessToken as AnyObject]
         if let after = nextPagingCursor {
-            //print("Fetching OTG Events using 'after' cursor >>> \(after)")
             params[Constants.Keys.after] = after as AnyObject
         }
         
@@ -56,11 +57,9 @@ class OTGManager {
             let eventsJSON = response?[Constants.Keys.data] as? JSONObjectArray ?? []
             var after: String?
             
-            if let paging = response?[Constants.Keys.paging] as? [String:AnyObject],
-                let cursors = paging[Constants.Keys.cursors] as? [String:AnyObject] {
+            if let paging = response?[Constants.Keys.paging] as? JSONObject,
+                let cursors = paging[Constants.Keys.cursors] as? JSONObject {
                 after = cursors[Constants.Keys.after] as? String
-                /*let before = cursors["before"] as? String
-                print("OTG Events Fetched! \nAfter: \(after ?? "<NULL>"), Before: \(before ?? "<NULL>")")*/
             }
             
             handler(eventsJSON, after)
@@ -77,10 +76,10 @@ class OTGManager {
                              afterPageCursor:String? = nil,
                              handler: @escaping (JSONObjectArray) -> Void) {
         
+        // Store events in mutable collection
         var aggreatedEvents = upcomingEvents
-        var pageAfter = afterPageCursor
         
-        self.fetchEvents(nextPagingCursor: pageAfter) { events, after in
+        self.fetchEvents(nextPagingCursor: afterPageCursor) { events, after in
             // Check if no events
             guard events.count > 0 else {
                 handler(aggreatedEvents.reversed())
@@ -101,9 +100,6 @@ class OTGManager {
                 return
             }
             
-            // Set the next events page to fetch
-            pageAfter = after
-            
             // TEST: Remove this!!!
             guard aggreatedEvents.count < 25 else {
                 handler(aggreatedEvents.reversed())
@@ -111,17 +107,27 @@ class OTGManager {
             }
             
             // Recursively
-            self.fetchUpcomingEvents(upcomingEvents: aggreatedEvents, afterPageCursor: pageAfter, handler: handler)
+            self.fetchUpcomingEvents(upcomingEvents: aggreatedEvents, afterPageCursor: after, handler: handler)
         }
     }
     
     // MARK - Vendors
     func fetchVendors() {
-        let vendorsUrl = OffTheGrid.Urls.OTGVendors.rawValue
+        let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
-            if let vendorsJSON = response?[Constants.Keys.vendors] as? [AnyObject] {
+            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
+                print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
+            }
+        })
+    }
+    
+    func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
+        let vendorDetailsUrl = OffTheGrid.Urls.VendorDetailsPartial.rawValue + "\(id).json"
+        
+        NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
+            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
                 print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
             }
         })

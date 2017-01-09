@@ -9,7 +9,8 @@
 import UIKit
 import Alamofire
 
-typealias JSONObjectArray = [[String:AnyObject]]
+typealias JSONObject = [String:AnyObject]
+typealias JSONObjectArray = [JSONObject]
 
 class NetworkManager {
     static let sharedInstance = NetworkManager()
