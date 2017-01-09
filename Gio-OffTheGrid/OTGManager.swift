@@ -112,7 +112,7 @@ class OTGManager {
     }
     
     // MARK - Vendors
-    func fetchVendors() {
+    func fetchVendors(handler: ((JSONObjectArray) -> Void)? = nil) {
         let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
         
@@ -123,7 +123,7 @@ class OTGManager {
         })
     }
     
-    func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
+    /*func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
         let vendorDetailsUrl = OffTheGrid.Urls.VendorDetailsPartial.rawValue + "\(id).json"
         
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
@@ -131,5 +131,5 @@ class OTGManager {
                 print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
             }
         })
-    }
+    }*/
 }

@@ -17,12 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        OTGManager.sharedInstance.fetchUpcomingEvents { events in
+        OTGManager.sharedInstance.fetchVendors()
+        
+        /*OTGManager.sharedInstance.fetchUpcomingEvents { events in
             print("OTG Events(\(events.count))") //: \(events)")
             events.forEach({event in
                 print("Event(id:\(event["id"] as? String ?? "<NULL>")) Start Time >>> \(event["start_time"] as? String ?? "<NULL>")")
             })
-        }
+        }*/
         
         return true
     }

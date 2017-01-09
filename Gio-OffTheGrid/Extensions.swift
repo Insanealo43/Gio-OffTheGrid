@@ -15,7 +15,6 @@ extension Date {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = NSTimeZone.local
-        
         return formatter
     }()
     
