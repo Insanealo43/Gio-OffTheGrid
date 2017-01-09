@@ -106,7 +106,7 @@ class OTGManager {
                 return
             }
             
-            // Recursively
+            // Recursively fetch the next events
             self.fetchUpcomingEvents(upcomingEvents: aggreatedEvents, afterPageCursor: after, handler: handler)
         }
     }
