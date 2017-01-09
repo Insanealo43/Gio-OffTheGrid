@@ -16,8 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        OTGManager.sharedInstance.fetchEvents()
-        OTGManager.sharedInstance.fetchVendors()
+        OTGManager.sharedInstance.fetchUpcomingEvents { events in
+            print("OTG Events(\(events.count)): \(events)")
+        }
+        
+        /*OTGManager.sharedInstance.fetchEvents{ events, next in
+            print("After Paging Cursor >>> \(next ?? "<NULL>")")
+        }
+        OTGManager.sharedInstance.fetchVendors()*/
         
         return true
     }
