@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SDWebImage
+import MBProgressHUD
 
 extension Date {
     static let isoFormatter = ISO8601DateFormatter()
@@ -61,5 +63,48 @@ extension Date {
 extension String {
     var isoDate: Date? {
         return Date.isoFormatter.date(from: self)
+    }
+}
+
+extension UIViewController {
+    func showHUD() {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+    }
+    
+    func hideHUD() {
+        DispatchQueue.main.async {
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
+}
+
+extension UIImageView {
+    func fetchImageForUrl(urlString: String?, callback: ((UIImage?) -> Void)?) {
+        if let imageUrl = urlString {
+            self.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: nil,
+                             options: [.continueInBackground, .lowPriority])
+            { (image, error, cacheType, url) in
+                self.image = image
+                callback?(image)
+            }
+            
+        } else {
+            callback?(nil)
+        }
+        
+        
+        /*if let stringUrl = urlString,
+            let url = NSURL(string: stringUrl) {
+
+            self.sd_setImage(with: url as URL!, placeholderImage: nil, options: .progressiveDownload, completed: { image, _, _, _ in
+                if let fetchedImage = image {
+                    self.image = fetchedImage
+                }
+                callback?(image)
+            })
+            
+        } else {
+            callback?(nil)
+        }*/
     }
 }

@@ -15,8 +15,26 @@ class EventsViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.sectionHeaderHeight = 44.0
+        
+        self.showHUD()
         OTGManager.sharedInstance.fetchMarkets{ _ in
+            self.hideHUD()
             self.tableView.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEventVendors" {
+            if let eventVendorsController = segue.destination as? EventVendorsViewController {
+                if let marketEvent = sender as? JSONObject {
+                    eventVendorsController.marketEvent = marketEvent
+                }
+            }
         }
     }
 }
@@ -51,5 +69,9 @@ extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let market = OTGManager.sharedInstance.markets[indexPath.section]
+        let event = (market["Event"] as? JSONObjectArray)?[indexPath.row]
+        self.performSegue(withIdentifier: "showEventVendors", sender: event)
     }
 }

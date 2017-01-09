@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Adu-ku-0TM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,7 @@
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -245,11 +246,138 @@
                     <tabBarItem key="tabBarItem" title="Events" image="event_icon" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="tableView" destination="eb4-Mm-Yyx" id="8p7-Gr-fzB"/>
+                        <segue destination="pji-Py-zXE" kind="show" identifier="showEventVendors" id="F9c-rd-TP7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
+        </scene>
+        <!--Event Vendors View Controller-->
+        <scene sceneID="vZy-uT-3A6">
+            <objects>
+                <viewController storyboardIdentifier="EventVendorsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pji-Py-zXE" customClass="EventVendorsViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MyD-g7-9qQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="vME-YB-rMy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2D7-4e-eWK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="van-6b-QKb">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="noj-OM-Hbx" customClass="EventVendorsFlowLayout" customModule="Gio_OffTheGrid" customModuleProvider="target">
+                                    <size key="itemSize" width="180" height="180"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="numCols">
+                                            <integer key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="itemSpacing">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VendorCollectionViewCell" reuseIdentifier="vendorCell" id="Wgo-Kv-dki" customClass="VendorCollectionViewCell" customModule="Gio_OffTheGrid" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Pi-qz-mog">
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="134"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pBE-Ud-zzl" customClass="CircularImageView" customModule="Gio_OffTheGrid" customModuleProvider="target">
+                                                            <rect key="frame" x="40" y="17" width="100" height="100"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="pBE-Ud-zzl" secondAttribute="height" multiplier="1:1" id="Pkh-o7-L6d"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="pBE-Ud-zzl" firstAttribute="width" secondItem="7Pi-qz-mog" secondAttribute="width" constant="-80" id="4o8-9f-CeG"/>
+                                                        <constraint firstItem="pBE-Ud-zzl" firstAttribute="centerX" secondItem="7Pi-qz-mog" secondAttribute="centerX" id="RNw-QK-eHo"/>
+                                                        <constraint firstItem="pBE-Ud-zzl" firstAttribute="centerY" secondItem="7Pi-qz-mog" secondAttribute="centerY" id="pje-ss-gqt"/>
+                                                        <constraint firstItem="pBE-Ud-zzl" firstAttribute="width" secondItem="pBE-Ud-zzl" secondAttribute="height" multiplier="1:1" id="qQ5-rQ-yCm"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAu-wB-vkB">
+                                                    <rect key="frame" x="0.0" y="135" width="180" height="45"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="78B-Ij-fBl">
+                                                            <rect key="frame" x="8" y="4" width="164" height="37"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Brothers Kitchen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfl-ac-jUw">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="164" height="19"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asian Fusion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1nl-i3-hJq">
+                                                                    <rect key="frame" x="0.0" y="23" width="164" height="14"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="78B-Ij-fBl" firstAttribute="height" secondItem="JAu-wB-vkB" secondAttribute="height" constant="-8" id="SM2-Gr-Nda"/>
+                                                        <constraint firstItem="78B-Ij-fBl" firstAttribute="centerY" secondItem="JAu-wB-vkB" secondAttribute="centerY" id="Zzx-MV-K04"/>
+                                                        <constraint firstItem="78B-Ij-fBl" firstAttribute="centerX" secondItem="JAu-wB-vkB" secondAttribute="centerX" id="e8U-JY-LI6"/>
+                                                        <constraint firstItem="78B-Ij-fBl" firstAttribute="width" secondItem="JAu-wB-vkB" secondAttribute="width" constant="-16" id="sOp-Fu-vuH"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="JAu-wB-vkB" firstAttribute="height" secondItem="Wgo-Kv-dki" secondAttribute="height" multiplier="1:4" id="IF6-e6-Rru"/>
+                                            <constraint firstItem="7Pi-qz-mog" firstAttribute="width" secondItem="Wgo-Kv-dki" secondAttribute="width" id="IkS-7O-wl6"/>
+                                            <constraint firstItem="7Pi-qz-mog" firstAttribute="top" secondItem="Wgo-Kv-dki" secondAttribute="topMargin" constant="-8" id="K1b-LS-MOD"/>
+                                            <constraint firstItem="JAu-wB-vkB" firstAttribute="centerX" secondItem="Wgo-Kv-dki" secondAttribute="centerX" id="WI9-6P-9oO"/>
+                                            <constraint firstItem="7Pi-qz-mog" firstAttribute="centerX" secondItem="Wgo-Kv-dki" secondAttribute="centerX" id="b14-vl-oif"/>
+                                            <constraint firstItem="JAu-wB-vkB" firstAttribute="top" secondItem="7Pi-qz-mog" secondAttribute="bottom" constant="1" id="fVH-bq-zcd"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="JAu-wB-vkB" secondAttribute="bottom" constant="-8" id="iyb-qG-4LT"/>
+                                            <constraint firstItem="JAu-wB-vkB" firstAttribute="width" secondItem="Wgo-Kv-dki" secondAttribute="width" id="roG-8F-vP1"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="cuisineLabel" destination="1nl-i3-hJq" id="LPS-JX-33k"/>
+                                            <outlet property="nameLabel" destination="pfl-ac-jUw" id="fkE-LH-4BY"/>
+                                            <outlet property="vendorImageView" destination="pBE-Ud-zzl" id="7J9-5h-jHM"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="pji-Py-zXE" id="qIO-jf-lrt"/>
+                                    <outlet property="delegate" destination="pji-Py-zXE" id="2MC-vO-GHR"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="van-6b-QKb" firstAttribute="centerX" secondItem="2D7-4e-eWK" secondAttribute="centerX" id="227-Rb-MLA"/>
+                            <constraint firstItem="van-6b-QKb" firstAttribute="centerY" secondItem="2D7-4e-eWK" secondAttribute="centerY" id="5zN-Fw-Qac"/>
+                            <constraint firstItem="van-6b-QKb" firstAttribute="height" secondItem="2D7-4e-eWK" secondAttribute="height" id="OZf-Q4-ddb"/>
+                            <constraint firstItem="van-6b-QKb" firstAttribute="width" secondItem="2D7-4e-eWK" secondAttribute="width" id="vpj-gO-6NB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="van-6b-QKb" id="j36-k6-TH5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qf5-cf-11F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1605.5999999999999" y="-321.58920539730138"/>
         </scene>
         <!--Vendors-->
         <scene sceneID="wg7-f3-ORb">
@@ -270,11 +398,28 @@
             </objects>
             <point key="canvasLocation" x="750" y="360"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="peM-Pp-qZ0">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="Adu-ku-0TM" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gb4-xf-3k5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="CwZ-Lf-t5T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkg-mA-qad" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-806" y="0.0"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="wd3-pd-ccN"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>

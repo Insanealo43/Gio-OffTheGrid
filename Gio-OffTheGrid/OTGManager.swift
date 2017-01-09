@@ -16,6 +16,7 @@ public enum OffTheGrid {
         
         enum Partial {
             static let VendorDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
+            static let MarketDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/markets/"
         }
     }
     
@@ -46,6 +47,8 @@ class OTGManager {
             static let longitude = "longitude"
             static let event = "Event"
             static let monthDay = "month_day"
+            static let marketDetail = "MarketDetail"
+            static let market = "Market"
         }
         
         enum Values {
@@ -57,7 +60,6 @@ class OTGManager {
     }
     
     var eventMarketMap = [String:JSONObject]()
-    
     var upcomingEvents = JSONObjectArray() {
         willSet {
             print("Upcoming Events(\(newValue.count)): \(newValue)")
@@ -66,6 +68,7 @@ class OTGManager {
         }
     }
     
+    var marketDetailsMap = [String:JSONObject]()
     var markets = JSONObjectArray() {
         willSet {
             var events = JSONObjectArray()
@@ -206,10 +209,24 @@ class OTGManager {
         
         NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
             let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
-            //print("OTG Markets(\(markets.count), MarketsJSON: \(markets))")
-            
             self.markets = markets
             handler?(markets)
+        })
+    }
+    
+    func fetchMarketDetails(id: String, handler: @escaping ((JSONObject?) -> Void)) {
+        let marketUrl = OffTheGrid.Urls.Partial.MarketDetailsPartial + "/\(id).json"
+        
+        NetworkManager.sharedInstance.request(url: marketUrl, handler: { response in
+            let details = response?[Constants.Keys.marketDetail] as? JSONObject
+            let marketJSON = details?[Constants.Keys.market] as? JSONObject
+            
+            if let marketInfo = marketJSON?[Constants.Keys.market] as? JSONObject,
+                let marketId = marketInfo["id"] as? String {
+                self.marketDetailsMap[marketId] = details!
+            }
+            
+            handler(details)
         })
     }
 }
