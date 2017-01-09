@@ -17,46 +17,68 @@ public enum CacheKeys {
 
 class PersistanceManager {
     static let sharedInstance = PersistanceManager()
-    var storedMarketsJSON = JSONObject()
-    var storedEventsJSON = JSONObject()
-    var storedVendorsJSON = JSONObject()
+    internal enum Relations {
+        static let vendorIdToEventId = "vendorId-->eventId"
+        static let eventIdToJSON = "eventId-->eventJSON"
+    }
     
+    var vendorIdToEventIdMap = [String:String]()
+    var eventIdtoEventJSONMap = [String:JSONObject]()
+    
+    internal var storedMarketsJSON = JSONObject()
+    internal var storedEventsJSON = JSONObject()
+    internal var storedVendorsJSON = JSONObject()
+    
+    // MARK - Cache Loading
     func loadCache() {
         // Load cached markets
         self.loadCachedMarkets()
         
         // Load cached vendors
         self.loadCachedVendors()
+        
+        // Cleanup old events
+        self.cleanCache()
+    }
+    
+    func loadJSON(from cacheKey:String) -> JSONObject? {
+        if let data = DataCache.instance.readData(forKey: cacheKey) {
+            return self.convertToJSON(from: data)
+        }
+        return nil
     }
     
     internal func loadCachedMarkets() {
         if let cachedMarkets = self.loadJSON(from: CacheKeys.markets) {
             self.storedEventsJSON = cachedMarkets
             if let markets = cachedMarkets[CacheKeys.markets] as? JSONObjectArray {
+                // Populate the local Markets
                 OTGManager.sharedInstance.markets = markets
+                
+                // Store the computed Events, derived from the local Markets
+                self.storedMarketsJSON = [CacheKeys.events: OTGManager.sharedInstance.upcomingEvents as AnyObject]
             }
         }
     }
-    
-    /*internal func loadCachedEvents() {
-        if let cachedEvents = self.loadJSON(from: CacheKeys.events) {
-            self.storedEventsJSON = cachedEvents
-            if let events = cachedEvents[CacheKeys.events] as? JSONObjectArray {
-                OTGManager.sharedInstance.upcomingEvents = events
-            }
-        }
-    }*/
     
     internal func loadCachedVendors() {
         if let cachedVendors = self.loadJSON(from: CacheKeys.vendors) {
             self.storedVendorsJSON = cachedVendors
             if let vendors = cachedVendors[CacheKeys.vendors] as? JSONObjectArray {
+                // Populate the local Vendors
                 OTGManager.sharedInstance.vendors = vendors
             }
         }
     }
     
-    // MARK - JSON/Data Conversions
+    // MARK - Cache Saving
+    func saveJSON(json:JSONObject, with cacheKey: String) {
+        if let data = self.convertToData(from: json) {
+            DataCache.instance.write(data: data, forKey: cacheKey)
+        }
+    }
+    
+    // MARK - (JSONObject <-> Data) Conversions
     func convertToData(from json: JSONObject) -> Data? {
         do {
             return try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
@@ -73,17 +95,8 @@ class PersistanceManager {
         }
     }
     
-    // MARK - Save/Load Local Cache
-    func saveJSON(json:JSONObject, with cacheKey: String) {
-        if let data = self.convertToData(from: json) {
-            DataCache.instance.write(data: data, forKey: cacheKey)
-        }
-    }
-    
-    func loadJSON(from cacheKey:String) -> JSONObject? {
-        if let data = DataCache.instance.readData(forKey: cacheKey) {
-            return self.convertToJSON(from: data)
-        }
-        return nil
+    // MARK - Helpers
+    internal func cleanCache() {
+        
     }
 }
