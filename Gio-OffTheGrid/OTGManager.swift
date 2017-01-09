@@ -12,8 +12,11 @@ public enum OffTheGrid {
     enum Urls: String {
         case Vendors = "https://www.offthegridmarkets.com/api/v1.0/vendors.json"
         case Events = "https://graph.facebook.com/v2.8/OffTheGridSF/events"
-        case VendorDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
-        case Market
+        case Markets = "https://offthegrid.com/otg-api/passthrough/markets.json"
+        
+        enum Partial {
+            static let VendorDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
+        }
     }
     
     enum Facebook {
@@ -38,10 +41,16 @@ class OTGManager {
             static let next = "next"
             static let startTime = "start_time"
             static let endTime = "end_time"
+            static let markets = "Markets"
+            static let latitude = "latitude"
+            static let longitude = "longitude"
         }
         
         enum Values {
             static let nameAscending = "name-asc"
+            static let distanceAscending = "distance-asc"
+            static let latGingerIO = "37.790841"
+            static let lngGingerIO = "-122.401280"
         }
     }
     
@@ -117,9 +126,13 @@ class OTGManager {
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
+            var vendors = JSONObjectArray()
             if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
+                vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
             }
+            
+            print("OTG Vendors(\(vendors.count), VendorsJSON: \(vendors))")
+            handler?(vendors)
         })
     }
     
@@ -132,4 +145,18 @@ class OTGManager {
             }
         })
     }*/
+    
+    // MARK - Markets
+    func fetchMarkets(handler: ((JSONObjectArray) -> Void)? = nil) {
+        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
+        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
+                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
+                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
+        
+        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
+            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+            print("OTG Markets(\(markets.count), MarketsJSON: \(markets))")
+            handler?(markets)
+        })
+    }
 }
