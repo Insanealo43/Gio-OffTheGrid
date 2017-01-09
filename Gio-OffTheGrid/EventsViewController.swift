@@ -16,7 +16,7 @@ class EventsViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.sectionHeaderHeight = 28.0
-        OTGManager.sharedInstance.fetchUpcomingEvents { events in
+        OTGManager.sharedInstance.fetchFBEvents { events in
             self.upcomingEvents = events
             self.tableView.reloadData()
         }

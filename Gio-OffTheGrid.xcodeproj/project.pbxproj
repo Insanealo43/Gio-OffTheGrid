@@ -44,7 +44,7 @@
 /* Begin PBXFileReference section */
 		0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gio_OffTheGridUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		495049E11E22C38600FF23A5 /* OTGManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGManager.swift; sourceTree = "<group>"; };
+		495049E11E22C38600FF23A5 /* OTGManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		495049E41E235A9500FF23A5 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		495049E61E235AB000FF23A5 /* VendorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorsViewController.swift; sourceTree = "<group>"; };
 		495049E91E2367CA00FF23A5 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };

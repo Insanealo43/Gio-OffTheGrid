@@ -44,6 +44,8 @@ class OTGManager {
             static let markets = "Markets"
             static let latitude = "latitude"
             static let longitude = "longitude"
+            static let event = "Event"
+            static let monthDay = "month_day"
         }
         
         enum Values {
@@ -51,6 +53,55 @@ class OTGManager {
             static let distanceAscending = "distance-asc"
             static let latGingerIO = "37.790841"
             static let lngGingerIO = "-122.401280"
+        }
+    }
+    
+    var upcomingEvents = JSONObjectArray() {
+        willSet {
+            print("Upcoming Events(\(newValue.count)): \(newValue)")
+            print("Dates: \(newValue.map({ $0[Constants.Keys.monthDay]! }))")
+            print("Times: \(newValue.map({ $0[Constants.Keys.startTime]! }))")
+        }
+    }
+    
+    var eventMarketMap = [String:JSONObject]()
+    
+    var markets = JSONObjectArray() {
+        willSet {
+            var events = JSONObjectArray()
+            var mapping = [String:JSONObject]()
+            
+            newValue.forEach({ market in
+                if let marketEvents = market[Constants.Keys.event] as? JSONObjectArray {
+                    marketEvents.forEach({ event in
+                        events.append(event)
+                        if let id = event["id"] as? String {
+                            mapping[id] = market
+                        }
+                    })
+                }
+            })
+            
+            // Sort events by 'month_day', and then 'start_time'
+            events = events.sorted(by: { first, second in
+                if let firstDate = first[Constants.Keys.monthDay] as? String,
+                    let secondDate = second[Constants.Keys.monthDay] as? String {
+                    if firstDate != secondDate {
+                        return firstDate < secondDate
+                        
+                    } else if let firstStart = first[Constants.Keys.startTime] as? String,
+                        let secondStart = second[Constants.Keys.startTime] as? String {
+                        if firstStart != secondStart {
+                            return firstStart < secondStart
+                        }
+                    }
+                }
+                
+                return true
+            })
+            
+            self.upcomingEvents = events
+            self.eventMarketMap = mapping
         }
     }
     
@@ -81,7 +132,7 @@ class OTGManager {
          - Cannot assume that all upcoming events are returned in the first page of results
          - Events are returned in order of most current to futherest away
      */
-    func fetchUpcomingEvents(upcomingEvents:JSONObjectArray = JSONObjectArray(),
+    func fetchFBEvents(upcomingEvents:JSONObjectArray = JSONObjectArray(),
                              afterPageCursor:String? = nil,
                              handler: @escaping (JSONObjectArray) -> Void) {
         
@@ -103,20 +154,20 @@ class OTGManager {
                 }
             })
             
-            // Check if there isn't another page of events
+            // Check if a next page exists after
             guard after != nil else {
                 handler(aggreatedEvents.reversed())
                 return
             }
             
             // TEST: Remove this!!!
-            guard aggreatedEvents.count < 25 else {
+            /*guard aggreatedEvents.count < 25 else {
                 handler(aggreatedEvents.reversed())
                 return
-            }
+            }*/
             
             // Recursively fetch the next events
-            self.fetchUpcomingEvents(upcomingEvents: aggreatedEvents, afterPageCursor: after, handler: handler)
+            self.fetchFBEvents(upcomingEvents: aggreatedEvents, afterPageCursor: after, handler: handler)
         }
     }
     
@@ -155,7 +206,9 @@ class OTGManager {
         
         NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
             let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
-            print("OTG Markets(\(markets.count), MarketsJSON: \(markets))")
+            //print("OTG Markets(\(markets.count), MarketsJSON: \(markets))")
+            
+            self.markets = markets
             handler?(markets)
         })
     }
