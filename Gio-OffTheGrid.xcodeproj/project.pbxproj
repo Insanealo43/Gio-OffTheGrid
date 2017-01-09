@@ -12,6 +12,8 @@
 		495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E11E22C38600FF23A5 /* OTGManager.swift */; };
 		495049E51E235A9500FF23A5 /* OTGEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E41E235A9500FF23A5 /* OTGEventsViewController.swift */; };
 		495049E71E235AB000FF23A5 /* OTGVendorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E61E235AB000FF23A5 /* OTGVendorsViewController.swift */; };
+		495049EA1E2367CA00FF23A5 /* OTGEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049E91E2367CA00FF23A5 /* OTGEventTableViewCell.swift */; };
+		495049ED1E236C7A00FF23A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495049EC1E236C7A00FF23A5 /* Extensions.swift */; };
 		4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */; };
 		496540531E21E6DD00A5AC37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 496540511E21E6DD00A5AC37 /* Main.storyboard */; };
 		496540551E21E6DD00A5AC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 496540541E21E6DD00A5AC37 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 		495049E11E22C38600FF23A5 /* OTGManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGManager.swift; sourceTree = "<group>"; };
 		495049E41E235A9500FF23A5 /* OTGEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGEventsViewController.swift; sourceTree = "<group>"; };
 		495049E61E235AB000FF23A5 /* OTGVendorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGVendorsViewController.swift; sourceTree = "<group>"; };
+		495049E91E2367CA00FF23A5 /* OTGEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTGEventTableViewCell.swift; sourceTree = "<group>"; };
+		495049EC1E236C7A00FF23A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		496540481E21E6DD00A5AC37 /* Gio-OffTheGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gio-OffTheGrid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		496540521E21E6DD00A5AC37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -117,10 +121,27 @@
 		495049E31E235A7A00FF23A5 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				495049E81E2367B200FF23A5 /* Cells */,
 				495049E41E235A9500FF23A5 /* OTGEventsViewController.swift */,
 				495049E61E235AB000FF23A5 /* OTGVendorsViewController.swift */,
 			);
 			name = Tabs;
+			sourceTree = "<group>";
+		};
+		495049E81E2367B200FF23A5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				495049E91E2367CA00FF23A5 /* OTGEventTableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		495049EB1E236C4E00FF23A5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				495049EC1E236C7A00FF23A5 /* Extensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		4965403F1E21E6DD00A5AC37 = {
@@ -148,8 +169,9 @@
 		4965404A1E21E6DD00A5AC37 /* Gio-OffTheGrid */ = {
 			isa = PBXGroup;
 			children = (
-				495049E31E235A7A00FF23A5 /* Tabs */,
+				495049EB1E236C4E00FF23A5 /* Extensions */,
 				4908EAEE1E21E7B8002BFE2D /* Networking */,
+				495049E31E235A7A00FF23A5 /* Tabs */,
 				4965404B1E21E6DD00A5AC37 /* AppDelegate.swift */,
 				496540511E21E6DD00A5AC37 /* Main.storyboard */,
 				496540541E21E6DD00A5AC37 /* Assets.xcassets */,
@@ -474,10 +496,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */,
+				495049EA1E2367CA00FF23A5 /* OTGEventTableViewCell.swift in Sources */,
 				495049E21E22C38600FF23A5 /* OTGManager.swift in Sources */,
 				495049E71E235AB000FF23A5 /* OTGVendorsViewController.swift in Sources */,
 				495049E51E235A9500FF23A5 /* OTGEventsViewController.swift in Sources */,
 				4965404C1E21E6DD00A5AC37 /* AppDelegate.swift in Sources */,
+				495049ED1E236C7A00FF23A5 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
