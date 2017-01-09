@@ -1,0 +1,6 @@
+framework module Pods_Gio_OffTheGrid {
+  umbrella header "Pods-Gio-OffTheGrid-umbrella.h"
+
+  export *
+  module * { export * }
+}

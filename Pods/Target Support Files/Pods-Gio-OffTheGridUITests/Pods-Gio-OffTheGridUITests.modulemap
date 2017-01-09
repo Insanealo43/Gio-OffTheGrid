@@ -1,0 +1,6 @@
+framework module Pods_Gio_OffTheGridUITests {
+  umbrella header "Pods-Gio-OffTheGridUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

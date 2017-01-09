@@ -11,6 +11,7 @@ import Alamofire
 
 typealias JSONObject = [String:AnyObject]
 typealias JSONObjectArray = [JSONObject]
+typealias JSONObjectMapping = [String:JSONObject]
 
 class NetworkManager {
     static let sharedInstance = NetworkManager()

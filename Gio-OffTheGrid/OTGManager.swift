@@ -59,7 +59,7 @@ class OTGManager {
         }
     }
     
-    var eventMarketMap = [String:JSONObject]()
+    var eventMarketMap = JSONObjectMapping()
     var upcomingEvents = JSONObjectArray() {
         willSet {
             print("Upcoming Events(\(newValue.count)): \(newValue)")
@@ -68,11 +68,11 @@ class OTGManager {
         }
     }
     
-    var marketDetailsMap = [String:JSONObject]()
+    var marketDetailsMap = JSONObjectMapping()
     var markets = JSONObjectArray() {
         willSet {
             var events = JSONObjectArray()
-            var mapping = [String:JSONObject]()
+            var mapping = JSONObjectMapping()
             
             newValue.forEach({ market in
                 if let marketEvents = market[Constants.Keys.event] as? JSONObjectArray {
@@ -83,6 +83,13 @@ class OTGManager {
                         }
                     })
                 }
+                
+                /* TODO: 
+                 - Async retrieve every Market's Details to aggreate 
+                 all Vendorsfor Events
+                 - Sync these relations with the Cache (update/add) relations
+              */
+
             })
             
             // Sort events by 'month_day', and then 'start_time'
@@ -194,15 +201,15 @@ class OTGManager {
         })
     }
     
-    /*func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
-        let vendorDetailsUrl = OffTheGrid.Urls.VendorDetailsPartial.rawValue + "\(id).json"
+    func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
+        let vendorDetailsUrl = OffTheGrid.Urls.Partial.VendorDetails + "\(id).json"
         
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
             if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
                 print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
             }
         })
-    }*/
+    }
     
     // MARK - Markets
     func fetchMarkets(handler: ((JSONObjectArray) -> Void)? = nil) {
@@ -218,7 +225,6 @@ class OTGManager {
             
             // Cache the markets
             PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
-            
             handler?(markets)
         })
     }
