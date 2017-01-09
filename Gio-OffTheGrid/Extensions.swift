@@ -79,6 +79,11 @@ extension UIViewController {
 }
 
 extension UIImageView {
+    func setImageWithTintColor(image: UIImage, tintColor: UIColor) {
+        self.image = image.withRenderingMode(.alwaysTemplate)
+        self.tintColor = tintColor
+    }
+    
     func fetchImageForUrl(urlString: String?, callback: ((UIImage?) -> Void)?) {
         if let imageUrl = urlString {
             self.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: nil,
@@ -91,20 +96,5 @@ extension UIImageView {
         } else {
             callback?(nil)
         }
-        
-        
-        /*if let stringUrl = urlString,
-            let url = NSURL(string: stringUrl) {
-
-            self.sd_setImage(with: url as URL!, placeholderImage: nil, options: .progressiveDownload, completed: { image, _, _, _ in
-                if let fetchedImage = image {
-                    self.image = fetchedImage
-                }
-                callback?(image)
-            })
-            
-        } else {
-            callback?(nil)
-        }*/
     }
 }

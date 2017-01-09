@@ -7,25 +7,36 @@
 //
 
 import UIKit
-import SDWebImage
 
 class VendorCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var vendorImageView: CircularImageView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var cuisineLabel: UILabel!
+    @IBOutlet weak var eventsIconImageView: UIImageView!
+    @IBOutlet weak var eventCountLabel: UILabel!
     
     var vendor: JSONObject? {
         willSet {
             let logoUrl = newValue?["logo_url"] as? String
-            vendorImageView.fetchImageForUrl(urlString: logoUrl, callback: nil)
-            
+            imageView.fetchImageForUrl(urlString: logoUrl, callback: nil)
             nameLabel.text = newValue?["name"] as? String
-            cuisineLabel.text = newValue?["cuisine"] as? String
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let selectionView = UIView()
+        selectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        self.selectedBackgroundView = selectionView
+        
+        if let eventImage = eventsIconImageView.image {
+            eventsIconImageView.setImageWithTintColor(image: eventImage, tintColor: UIColor.white)
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        vendorImageView.image = nil
+        imageView.image = nil
+        eventCountLabel.text = String(0)
     }
 }

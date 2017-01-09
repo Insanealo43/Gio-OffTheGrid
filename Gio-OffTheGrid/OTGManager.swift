@@ -15,8 +15,8 @@ public enum OffTheGrid {
         case Markets = "https://offthegrid.com/otg-api/passthrough/markets.json"
         
         enum Partial {
-            static let VendorDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
-            static let MarketDetailsPartial = "https://www.offthegrid.com/otg-api/passthrough/markets/"
+            static let VendorDetails = "https://www.offthegrid.com/otg-api/passthrough/vendors/"
+            static let MarketDetails = "https://www.offthegrid.com/otg-api/passthrough/markets/"
         }
     }
     
@@ -108,6 +108,8 @@ class OTGManager {
         }
     }
     
+    var vendors = JSONObjectArray()
+    
     // MARK - Events
     func fetchEvents(nextPagingCursor:String? = nil, handler: @escaping (_ events:JSONObjectArray, _ afterPagingCursor:String?) -> Void) {
         let eventsUrl = OffTheGrid.Urls.Events.rawValue
@@ -180,13 +182,12 @@ class OTGManager {
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
-            var vendors = JSONObjectArray()
             if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
+                self.vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
             }
             
-            print("OTG Vendors(\(vendors.count), VendorsJSON: \(vendors))")
-            handler?(vendors)
+            //print("OTG Vendors(\(self.vendors.count), VendorsJSON: \(self.vendors))")
+            handler?(self.vendors)
         })
     }
     
@@ -215,7 +216,7 @@ class OTGManager {
     }
     
     func fetchMarketDetails(id: String, handler: @escaping ((JSONObject?) -> Void)) {
-        let marketUrl = OffTheGrid.Urls.Partial.MarketDetailsPartial + "/\(id).json"
+        let marketUrl = OffTheGrid.Urls.Partial.MarketDetails + "/\(id).json"
         
         NetworkManager.sharedInstance.request(url: marketUrl, handler: { response in
             let details = response?[Constants.Keys.marketDetail] as? JSONObject

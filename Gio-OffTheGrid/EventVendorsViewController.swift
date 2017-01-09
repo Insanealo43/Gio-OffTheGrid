@@ -62,8 +62,14 @@ extension EventVendorsViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vendorCell", for: indexPath) as! VendorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vendorCell", for: indexPath) as! EventVendorCollectionViewCell
         cell.vendor = self.vendors[indexPath.row]
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
     }
 }
