@@ -29,6 +29,7 @@
 		496540631E21E6DD00A5AC37 /* Gio_OffTheGridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496540621E21E6DD00A5AC37 /* Gio_OffTheGridTests.swift */; };
 		4965406E1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965406D1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift */; };
 		4999FD351E25340A00DB551E /* CachingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4999FD341E25340A00DB551E /* CachingManager.swift */; };
+		4999FD371E25519F00DB551E /* VendorEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4999FD361E25519F00DB551E /* VendorEventsViewController.swift */; };
 		BC122D68F34B78E6B0FA72AB /* Pods_Gio_OffTheGrid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C998F9378F30140218A4CCCB /* Pods_Gio_OffTheGrid.framework */; };
 		F498F644DA2C93DA8A174A12 /* Pods_Gio_OffTheGridUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C99B8B654E433DC2008DD /* Pods_Gio_OffTheGridUITests.framework */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		4965406D1E21E6DD00A5AC37 /* Gio_OffTheGridUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gio_OffTheGridUITests.swift; sourceTree = "<group>"; };
 		4965406F1E21E6DD00A5AC37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4999FD341E25340A00DB551E /* CachingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingManager.swift; sourceTree = "<group>"; };
+		4999FD361E25519F00DB551E /* VendorEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorEventsViewController.swift; sourceTree = "<group>"; };
 		5C75648E7F18152A330BD5AA /* Pods-Gio-OffTheGrid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGrid.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGrid/Pods-Gio-OffTheGrid.debug.xcconfig"; sourceTree = "<group>"; };
 		7613AD0F483D0EE0C600EBF2 /* Pods-Gio-OffTheGridUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridUITests/Pods-Gio-OffTheGridUITests.release.xcconfig"; sourceTree = "<group>"; };
 		917BC1F9C9655DB88CEA538E /* Pods-Gio-OffTheGridTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gio-OffTheGridTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gio-OffTheGridTests/Pods-Gio-OffTheGridTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				495049E41E235A9500FF23A5 /* EventsTabViewController.swift */,
 				495049E61E235AB000FF23A5 /* VendorsTabViewController.swift */,
 				495049F21E23B35E00FF23A5 /* EventVendorsViewController.swift */,
+				4999FD361E25519F00DB551E /* VendorEventsViewController.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 			files = (
 				49504A021E23F07F00FF23A5 /* PersistanceManager.swift in Sources */,
 				495049FE1E23DBAF00FF23A5 /* VendorCollectionViewCell.swift in Sources */,
+				4999FD371E25519F00DB551E /* VendorEventsViewController.swift in Sources */,
 				4908EAF01E21E7D4002BFE2D /* NetworkManager.swift in Sources */,
 				495049F61E23B52800FF23A5 /* EventVendorsFlowLayout.swift in Sources */,
 				495049EA1E2367CA00FF23A5 /* EventTableViewCell.swift in Sources */,

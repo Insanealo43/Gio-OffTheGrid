@@ -11,6 +11,7 @@ import UIKit
 class EventVendorsViewController: UIViewController {
     internal enum Constants {
         static let vendorCellId = "vendorCell"
+        static let vendorEventsSegueId = "showMarketVendorEvents"
     }
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -53,6 +54,21 @@ class EventVendorsViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.vendorEventsSegueId {
+            if let vendorEventsController = segue.destination as? VendorEventsViewController {
+                if let indexPath = sender as? IndexPath {
+                    let vendor = self.vendors[indexPath.row]
+                    if let vendorId = vendor[OTGManager.Constants.Keys.id] as? String {
+                        if let vendorEvents = OTGManager.sharedInstance.vendorEventsMap[vendorId] {
+                            vendorEventsController.events = vendorEvents
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension EventVendorsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -69,6 +85,6 @@ extension EventVendorsViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        // TODO: Handle routing when finished with cache
+        self.performSegue(withIdentifier: Constants.vendorEventsSegueId, sender: indexPath)
     }
 }

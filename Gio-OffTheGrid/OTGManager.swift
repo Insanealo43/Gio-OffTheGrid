@@ -351,6 +351,12 @@ class OTGManager {
                             // Add new, matching event for current vendor, and update the mapping
                             eventsForVendor.append(event)
                             vendorEventsMap[vendorId] = eventsForVendor
+                            
+                            /*if let eventData = event[Constants.Keys.event] as? JSONObject {
+                                // Add new, matching event for current vendor, and update the mapping
+                                eventsForVendor.append(eventData)
+                                vendorEventsMap[vendorId] = eventsForVendor
+                            }*/
                         }
                     }
                 })
