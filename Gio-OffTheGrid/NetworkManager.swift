@@ -55,6 +55,7 @@ class NetworkManager {
         
         // Finish and notify on the Main Thread
         group.notify(queue: DispatchQueue.main, execute: {
+            print("Completed \(urls.count) Batch Request Operations!")
             completion?()
         })
     }

@@ -79,8 +79,7 @@ class OTGManager {
     
     var markets = JSONObjectArray()
     var detailedMarkets = JSONObjectArray()
-    var marketsMap = JSONObjectMapping()
-    
+    var detailedMarketsMap = JSONObjectMapping()
     var vendors = JSONObjectArray()
     
 
@@ -150,7 +149,7 @@ class OTGManager {
                 
                 // Save detailed markets locally
                 self.detailedMarkets = marketsJSON
-                self.marketsMap = marketsJSONMap
+                self.detailedMarketsMap = marketsJSONMap
                 
                 // Post DetailedMarketsFetched Notification
                 let notificationName = Notification.Name(Constants.Notifications.DetailedMarketsFetched)

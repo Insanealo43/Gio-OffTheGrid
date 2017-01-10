@@ -16,19 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Load data from the local cache
+        CachingManager.sharedInstance.loadFromCache()
+        
         // Fetch all markets
         OTGManager.sharedInstance.fetchMarkets { markets in
-            //print("MarketsJSON: \(markets)")
+            // Cache the markets
+            CachingManager.sharedInstance.saveJSONArray(jsonArray: markets, with: CachingManager.CacheKeys.markets)
         }
         
         // Fetch all detailed markets
-        OTGManager.sharedInstance.fetchDetailedMarkets { markets, marketsMap in
-            //print("DetailedMarketsJSON: \(markets.first!)")
+        OTGManager.sharedInstance.fetchDetailedMarkets { detailedMarkets, marketsMap in
+            // Cache the detailed markets and its mapping
+            CachingManager.sharedInstance.saveJSONArray(jsonArray: detailedMarkets, with: CachingManager.CacheKeys.detailedMarkets)
+            CachingManager.sharedInstance.saveJSONMap(jsonMap: marketsMap, with: CachingManager.CacheKeys.detailedMarketsMap)
         }
         
         // Fetch all vendors
         OTGManager.sharedInstance.fetchVendors { vendors in
-            //print("VendorsJSON: \(vendors)")
+            // Cache the vendors
+            CachingManager.sharedInstance.saveJSONArray(jsonArray: vendors, with: CachingManager.CacheKeys.vendors)
         }
         
         //PersistanceManager.sharedInstance.loadCache()

@@ -54,7 +54,7 @@ class EventsTabViewController: UIViewController {
                     // Check if the vendors have loaded from the DetailedMarkets' batch request
                     if let marketId = event?[OTGManager.Constants.Keys.marketId] as? String,
                         let eventId = (event?[OTGManager.Constants.Keys.id] as? String) {
-                        let detailedMarket = OTGManager.sharedInstance.marketsMap[marketId]
+                        let detailedMarket = OTGManager.sharedInstance.detailedMarketsMap[marketId]
                         let eventsMapKey = OTGManager.Constants.CustomKeys.eventIdEventJSONMapKey
                         let detailedEvent = detailedMarket?[eventsMapKey]?[eventId] as? JSONObject
                         
