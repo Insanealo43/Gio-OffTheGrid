@@ -9,7 +9,14 @@
 import UIKit
 
 class EventsTabViewController: UIViewController {
+    internal enum Constants {
+        static let vendorsSegueId = "showEventVendors"
+        static let marketHeaderId = "marketCell"
+        static let eventCellId = "marketEventCell"
+    }
+    
     @IBOutlet weak var tableView: UITableView!
+    
     internal var markets: JSONObjectArray {
         get {
             return OTGManager.sharedInstance.markets
@@ -22,11 +29,10 @@ class EventsTabViewController: UIViewController {
         
         if self.markets.count == 0 {
             self.showHUD()
-        }
-        
-        OTGManager.sharedInstance.fetchMarketsOld{ markets in
-            self.hideHUD()
-            self.tableView.reloadData()
+            OTGManager.sharedInstance.fetchMarkets{ _ in
+                self.hideHUD()
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -36,7 +42,7 @@ class EventsTabViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEventVendors" {
+        if segue.identifier == Constants.vendorsSegueId {
             if let eventVendorsController = segue.destination as? EventVendorsViewController {
                 if let marketEvent = sender as? JSONObject {
                     eventVendorsController.marketEvent = marketEvent
@@ -52,7 +58,7 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let marketCell = tableView.dequeueReusableCell(withIdentifier: "marketCell") as! MarketHeaderTableViewCell
+        let marketCell = tableView.dequeueReusableCell(withIdentifier: Constants.marketHeaderId) as! MarketHeaderTableViewCell
         let market = self.markets[section]
         marketCell.market = market
         return marketCell
@@ -60,15 +66,15 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let market = self.markets[section]
-        let events = market["Event"] as? JSONObjectArray ?? []
-        return events.count
+        let events = market[OTGManager.Constants.Keys.events] as? JSONObjectArray
+        return events?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let eventCell = tableView.dequeueReusableCell(withIdentifier: "marketEventCell", for: indexPath) as! MarketEventTableViewCell
+        let eventCell = tableView.dequeueReusableCell(withIdentifier: Constants.eventCellId, for: indexPath) as! MarketEventTableViewCell
         
         let market = self.markets[indexPath.section]
-        let event = (market["Event"] as? JSONObjectArray)?[indexPath.row]
+        let event = (market[OTGManager.Constants.Keys.events] as? JSONObjectArray)?[indexPath.row]
         eventCell.marketEvent = event
         
         return eventCell
@@ -78,7 +84,7 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let market = self.markets[indexPath.section]
-        let event = (market["Event"] as? JSONObjectArray)?[indexPath.row]
-        self.performSegue(withIdentifier: "showEventVendors", sender: event)
+        let event = (market[OTGManager.Constants.Keys.events] as? JSONObjectArray)?[indexPath.row]
+        self.performSegue(withIdentifier: Constants.vendorsSegueId, sender: event)
     }
 }

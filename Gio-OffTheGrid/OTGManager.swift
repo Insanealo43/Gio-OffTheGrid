@@ -89,6 +89,7 @@ class OTGManager {
     
     
     var markets = JSONObjectArray()
+    var detailedMarkets = JSONObjectArray()
     var vendors = JSONObjectArray()
     /*{
         willSet {
@@ -157,6 +158,9 @@ class OTGManager {
                 }
                 return json
             })
+            
+            // Save markets locally
+            self.markets = markets
             
             // Post MarketsFetched Notification
             let notificationName = Notification.Name(Constants.Notifications.MarketsFetched)
@@ -236,6 +240,9 @@ class OTGManager {
                 // Restore the original Markets' sort order
                 marketsJSON = marketIds.flatMap({ marketsJSONMap[$0] })
                 
+                // Save detailed markets locally
+                self.detailedMarkets = marketsJSON
+                
                 // Post DetailedMarketsFetched Notification
                 let notificationName = Notification.Name(Constants.Notifications.DetailedMarketsFetched)
                 NotificationCenter.default.post(name: notificationName, object: self, userInfo: [Constants.Keys.markets: marketsJSON])
@@ -256,6 +263,9 @@ class OTGManager {
             let vendors = ((response?[Constants.Keys.vendors] as? JSONObjectArray) ?? JSONObjectArray()).flatMap({
                 return $0[Constants.Keys.vendor] as? JSONObject
             })
+            
+            // Save vendors locally
+            self.vendors = vendors
             
             // Post VendorsFetched Notification
             let notificationName = Notification.Name(Constants.Notifications.VendorsFetched)
