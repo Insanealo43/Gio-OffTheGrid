@@ -19,6 +19,13 @@ class VendorCollectionViewCell: UICollectionViewCell {
             let logoUrl = newValue?["logo_url"] as? String
             imageView.fetchImageForUrl(urlString: logoUrl, callback: nil)
             nameLabel.text = newValue?["name"] as? String
+            
+            if let vendorId = newValue?[OTGManager.Constants.Keys.id] as? String {
+                if let vendorEvents = OTGManager.sharedInstance.vendorEventsMap[vendorId] {
+                    self.eventCountLabel.text = String(vendorEvents.count)
+                }
+            }
+
         }
     }
     
