@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Fetch all detailed markets
-        OTGManager.sharedInstance.fetchDetailedMarkets { markets in
-            //print("DetailedMarketsJSON: \(markets)")
+        OTGManager.sharedInstance.fetchDetailedMarkets { markets, marketsMap in
+            //print("DetailedMarketsJSON: \(markets.first!)")
         }
         
         // Fetch all vendors

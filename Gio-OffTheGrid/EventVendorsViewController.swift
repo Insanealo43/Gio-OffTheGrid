@@ -22,50 +22,36 @@ class EventVendorsViewController: UIViewController {
         get { return event?[OTGManager.Constants.Keys.id] as? String }
     }
     
-    
-    /*internal var eventId: String?
-    var marketEvent: JSONObject? {
-        willSet {
-            eventId = newValue?["id"] as? String
-        }
+    internal var marketId:String? {
+        get { return event?[OTGManager.Constants.Keys.marketId] as? String }
     }
     
-    internal var vendors = JSONObjectArray()
-    internal var marketDetails: JSONObject? {
-        willSet {
-            let events = newValue?["Events"] as? JSONObjectArray
-            events?.forEach({ event in
-                let eventData = event["Event"] as? JSONObject
-                if let currentEventId = eventData?["id"] as? String,
-                    let marketEventId = self.eventId {
-                    if currentEventId == marketEventId {
-                        if let vendors = event["Vendors"] as? JSONObjectArray {
-                            self.vendors = vendors
-                            return
-                        }
-                    }
-                }
-            })
-        }
-    }*/
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let marketId = event?["market_id"] as? String {
-            self.showHUD()
-            OTGManager.sharedInstance.fetchMarketDetails(id: marketId, handler: { details in
-                print("DetailedMarketFetched: \(details!)")
-                
-                self.hideHUD()
-                self.collectionView.reloadData()
-            })
-        }
+        self.fetchDetailedMarket()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    internal func fetchDetailedMarket() {
+        if let marketId = self.marketId, vendors.count == 0 {
+            self.showHUD()
+            OTGManager.sharedInstance.fetchDetailedMarket(id: marketId) { market in
+                self.hideHUD()
+                
+                if let eventId = self.eventId {
+                    let eventMap = market?[OTGManager.Constants.CustomKeys.eventIdEventJSONMapKey] as? JSONObjectMapping
+                    if let vendors = (eventMap?[eventId]?[OTGManager.Constants.Keys.vendors]) as? JSONObjectArray {
+                        self.vendors = vendors
+                    }
+                }
+                
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -83,6 +69,6 @@ extension EventVendorsViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
+        // TODO: Handle routing when finished with cache
     }
 }
