@@ -23,7 +23,7 @@ class VendorsTabViewController: UIViewController {
             self.showHUD()
         }
         
-        OTGManager.sharedInstance.fetchVendors{ _ in
+        OTGManager.sharedInstance.fetchVendorsOld{ _ in
             self.hideHUD()
             self.collectionView.reloadData()
         }

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        OTGManager.sharedInstance.fetchAllMarketDetails { markets, marketsMap in
+        OTGManager.sharedInstance.fetchDetailedMarkets { markets, marketsMap in
             print("Markets(\(markets.count))")
             print("Mapped Markets(\(marketsMap.count)): \(marketsMap.values.first)")
         }
