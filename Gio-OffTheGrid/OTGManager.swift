@@ -348,11 +348,9 @@ class OTGManager {
         return vendors ?? JSONObjectArray()
     }
     
-    func vendorEventsMapForMarket(market:JSONObject) -> JSONObjectArrayMapping {
+    func vendorEventsMapForEvents(events:JSONObjectArray) -> JSONObjectArrayMapping {
         var vendorEventsMap = JSONObjectArrayMapping()
-        let marketEvents = self.eventsForMarket(market: market)
-        
-        marketEvents.forEach({ event in
+        events.forEach({ event in
             if let eventId = (event[Constants.Keys.event] as? JSONObject)?[Constants.Keys.id] as? String {
                 let vendors = self.vendorsForEvent(event: event)
                 vendors.forEach({ vendor in
@@ -368,6 +366,31 @@ class OTGManager {
                 })
             }
         })
+        
+        return vendorEventsMap
+    }
+    
+    func vendorEventsMapForMarket(market:JSONObject) -> JSONObjectArrayMapping {
+        //var vendorEventsMap = JSONObjectArrayMapping()
+        let marketEvents = self.eventsForMarket(market: market)
+        let vendorEventsMap = self.vendorEventsMapForEvents(events: marketEvents)
+        
+        /*marketEvents.forEach({ event in
+            if let eventId = (event[Constants.Keys.event] as? JSONObject)?[Constants.Keys.id] as? String {
+                let vendors = self.vendorsForEvent(event: event)
+                vendors.forEach({ vendor in
+                    if let vendorId = vendor[Constants.Keys.id] as? String {
+                        var eventsForVendor = (vendorEventsMap[vendorId]) ?? JSONObjectArray()
+                        let eventIds = eventsForVendor.flatMap({ $0[Constants.Keys.id] as? String })
+                        if eventIds.index(of: eventId) == nil {
+                            // Add new, matching event for current vendor, and update the mapping
+                            eventsForVendor.append(event)
+                            vendorEventsMap[vendorId] = eventsForVendor
+                        }
+                    }
+                })
+            }
+        })*/
         
         return vendorEventsMap
     }

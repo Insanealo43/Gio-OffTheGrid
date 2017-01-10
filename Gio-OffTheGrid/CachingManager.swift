@@ -9,6 +9,8 @@
 import UIKit
 import DataCache
 
+// TODO: Implement callback for 'applicationSignificantTimeChange' event
+
 class CachingManager {
     static let sharedInstance = CachingManager()
     internal let pastVendorEventsMap = JSONObjectArrayMapping()
@@ -70,6 +72,9 @@ class CachingManager {
         self.loadCachedDetailedMarkets()
         self.loadCachedDetailedMarketsMap()
         self.loadCachedVendors()
+        
+        // TODO: Load private cache data
+        
     }
     
     func loadCachedMarkets() {
@@ -125,11 +130,18 @@ class CachingManager {
     }
     
     // MARK - Cache Updating
-    internal func refreshEventsCache() {
+    func refreshEventsCache() {
         // Scan the cached upcoming events and move past events into the private cache
         let localEvents = OTGManager.sharedInstance.allEvents
         let pastEvents = OTGManager.sharedInstance.filterPastVendorEvents(events: localEvents)
         
+        // Create a transient past vendorEvents map and merge with the cached past vendorEvents map
+        let pastVendorEventsMap = OTGManager.sharedInstance.vendorEventsMapForEvents(events: pastEvents)
+        for (vendorId, event) in pastVendorEventsMap {
+            
+        }
+        
+        // Remove invalid events from the past event cache
         
     }
     
