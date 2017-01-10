@@ -44,6 +44,27 @@ class EventsTabViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.vendorsSegueId {
             if let eventVendorsController = segue.destination as? EventVendorsViewController {
+                if let indexPath = sender as? IndexPath {
+                    
+                    // Pass the event to the EventVendors controller
+                    let market = self.markets[indexPath.section]
+                    let event = (market[OTGManager.Constants.Keys.events] as? JSONObjectArray)?[indexPath.row]
+                    eventVendorsController.event = event
+                    
+                    // Check if the vendors have loaded from the DetailedMarkets' batch request
+                    if let marketId = event?[OTGManager.Constants.Keys.marketId] as? String,
+                        let eventId = (event?[OTGManager.Constants.Keys.id] as? String) {
+                        let detailedMarket = OTGManager.sharedInstance.marketsMap[marketId]
+                        let eventsMapKey = OTGManager.Constants.CustomKeys.eventIdEventJSONMapKey
+                        let detailedEvent = detailedMarket?[eventsMapKey]?[eventId] as? JSONObject
+                        
+                        // Pass the associate vendors to the EventVendors controller
+                        if let vendors = detailedEvent?[OTGManager.Constants.Keys.vendors] as? JSONObjectArray {
+                            eventVendorsController.vendors = vendors
+                        }
+                    }
+                }
+                
                 if let marketEvent = sender as? JSONObject {
                     eventVendorsController.event = marketEvent
                 }
@@ -82,9 +103,6 @@ extension EventsTabViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let market = self.markets[indexPath.section]
-        let event = (market[OTGManager.Constants.Keys.events] as? JSONObjectArray)?[indexPath.row]
-        self.performSegue(withIdentifier: Constants.vendorsSegueId, sender: event)
+        self.performSegue(withIdentifier: Constants.vendorsSegueId, sender: indexPath)
     }
 }
