@@ -76,6 +76,12 @@ extension Date {
         return Date.localFormatter.string(from: self)
     }
     
+    var yearInt: Int {
+        Date.localFormatter.dateFormat = "y"
+        let year = Int(Date.localFormatter.string(from: self)) ?? -1
+        return year
+    }
+    
     var eventTime: String? {
         var timeComponents = [String]()
         if let dayAbbrev = self.dayAbbreviation {
@@ -91,8 +97,22 @@ extension Date {
     }
     
     func numberDaysUpTo(futureDate: Date) -> Int {
+//        let numDays = Date.calculateDaysSpannedBetweenDates(start: self, end: futureDate)
+//        return numDays
+        
         let components = Calendar.current.dateComponents([.day], from: self, to: futureDate)
         return components.day ?? -1
+    }
+    
+    static func calculateDaysSpannedBetweenDates(start: Date, end: Date) -> Int {
+        let currentCalendar = Calendar.current
+        guard let start = currentCalendar.ordinality(of: .day, in: .era, for: start) else {
+            return 0
+        }
+        guard let end = currentCalendar.ordinality(of: .day, in: .era, for: end) else {
+            return 0
+        }
+        return end - start
     }
 }
 
@@ -104,7 +124,14 @@ extension DateComponents {
     }()
     
     func date(monthInt: Int, dayInt: Int) -> Date? {
+        let currentDate = Calendar.current.startOfDay(for: Date())
+        let computedDate = self.date(yearInt: currentDate.yearInt, monthInt: monthInt, dayInt: dayInt)
+        return computedDate
+    }
+    
+    func date(yearInt:Int, monthInt:Int, dayInt:Int) -> Date? {
         var components = DateComponents.localComponents
+        components.year = yearInt
         components.month = monthInt
         components.day = dayInt
         return components.date

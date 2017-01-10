@@ -22,10 +22,11 @@ class CachingManager {
     }
     
     internal enum PrivateKeys {
+        static let aggregatedEvents = "futurePastAggreatedEvents"
         static let pastEvents = "pastVendorEvents"
     }
     
-    internal enum Constants {
+    public enum Constants {
         static let maxDayLimit = 30
     }
     
@@ -126,10 +127,12 @@ class CachingManager {
     // MARK - Cache Updating
     func refreshEventsCache() {
         // Scan the cached upcoming events and move past events into the private cache
-        
+        self.scanCachedUpcomingEvents()
     }
     
     internal func scanCachedUpcomingEvents() {
+        let localEvents = OTGManager.sharedInstance.allEvents
+        let pastEvents = OTGManager.sharedInstance.filterPastVendorEvents(events: localEvents)
         
     }
     

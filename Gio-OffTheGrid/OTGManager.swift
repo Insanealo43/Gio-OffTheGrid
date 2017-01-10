@@ -85,6 +85,10 @@ class OTGManager {
     var detailedMarketsMap = JSONObjectMapping()
     var vendors = JSONObjectArray()
     var vendorEventsMap = JSONObjectArrayMapping()
+    
+    var allEvents: JSONObjectArray {
+        get { return Array(self.vendorEventsMap.values).reduce([], +) }
+    }
 
     // MARK - Markets
     func fetchMarkets(handler: @escaping (JSONObjectArray) -> Void) {
@@ -295,10 +299,10 @@ class OTGManager {
                 CachingManager.sharedInstance.saveJSONObjectArrayMap(jsonObjectArrayMap: self.vendorEventsMap, with: CachingManager.CacheKeys.vendorEventsMap)
                 
                 print("OTGManager: Cached current OffTheGrid data!")
-                
-                // Update Cache for new OffTheGrid data
-                CachingManager.sharedInstance.refreshEventsCache()
             }
+            
+            // Update Cache for new OffTheGrid data
+            CachingManager.sharedInstance.refreshEventsCache()
         })
     }
     
@@ -406,11 +410,11 @@ class OTGManager {
     func filterPastVendorEvents(events:JSONObjectArray) -> JSONObjectArray {
         let currentDate = Calendar.current.startOfDay(for: Date())
         
-        var pastEvents = events.filter({ event in
+        let pastEvents = events.filter({ event in
             let eventDate = self.constructDateFromEvent(event: event)
             let numDaysSince = eventDate?.numberDaysUpTo(futureDate: currentDate) ?? 1
 
-            return numDaysSince > 0 && numDaysSince <= 30
+            return numDaysSince > 0 && numDaysSince <= CachingManager.Constants.maxDayLimit
         })
         
         return pastEvents
