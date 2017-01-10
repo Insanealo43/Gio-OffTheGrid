@@ -30,8 +30,9 @@ public enum OffTheGrid {
 class OTGManager {
     static let sharedInstance = OTGManager()
     
-    internal enum Constants {
+    enum Constants {
         enum Keys {
+            static let id = "id"
             static let accessToken = "access_token"
             static let sortOrder = "sort-order"
             static let data = "data"
@@ -47,12 +48,17 @@ class OTGManager {
             static let latitude = "latitude"
             static let longitude = "longitude"
             static let event = "Event"
+            static let events = "Events"
             static let monthDay = "month_day"
             static let marketDetail = "MarketDetail"
             static let market = "Market"
             static let amenitities = "Amenities"
             static let media = "Media"
             static let news = "News"
+        }
+        
+        enum CustomKeys {
+            static let eventIdEventJSONMapKey = "EventId_to_EventJSON_Map"
         }
         
         enum Values {
@@ -121,72 +127,6 @@ class OTGManager {
     
     var vendors = JSONObjectArray()
     
-    // MARK - Events
-    func fetchEvents(nextPagingCursor:String? = nil, handler: @escaping (_ events:JSONObjectArray, _ afterPagingCursor:String?) -> Void) {
-        let eventsUrl = OffTheGrid.Urls.Events.rawValue
-        var params = [Constants.Keys.accessToken: OffTheGrid.Facebook.AccessToken as AnyObject]
-        if let after = nextPagingCursor {
-            params[Constants.Keys.after] = after as AnyObject
-        }
-        
-        NetworkManager.sharedInstance.request(url: eventsUrl, parameters: params, handler: { response in
-            let eventsJSON = response?[Constants.Keys.data] as? JSONObjectArray ?? []
-            var after: String?
-            
-            if let paging = response?[Constants.Keys.paging] as? JSONObject,
-                let cursors = paging[Constants.Keys.cursors] as? JSONObject {
-                after = cursors[Constants.Keys.after] as? String
-            }
-            
-            handler(eventsJSON, after)
-        })
-    }
-    
-    /* Technical Notes:
-         - "Upcoming" is interpreted to be all events whose 'start_time' is in the future, -OR-
-            if the current time is between the 'start_time' and 'end_time' of the event
-         - Cannot assume that all upcoming events are returned in the first page of results
-         - Events are returned in order of most current to futherest away
-     */
-    func fetchFBEvents(upcomingEvents:JSONObjectArray = JSONObjectArray(),
-                             afterPageCursor:String? = nil,
-                             handler: @escaping (JSONObjectArray) -> Void) {
-        
-        // Store events in mutable collection
-        var aggreatedEvents = upcomingEvents
-        
-        self.fetchEvents(nextPagingCursor: afterPageCursor) { events, after in
-            // Check if no events
-            guard events.count > 0 else {
-                handler(aggreatedEvents.reversed())
-                return
-            }
-            
-            // Save upcoming events
-            events.forEach({ event in
-                if event[Constants.Keys.startTime] is String && event[Constants.Keys.endTime] is String {
-                    // TODO: Datetime comparison logic for recursion termination
-                    aggreatedEvents.append(event)
-                }
-            })
-            
-            // Check if a next page exists after
-            guard after != nil else {
-                handler(aggreatedEvents.reversed())
-                return
-            }
-            
-            // TEST: Remove this!!!
-            /*guard aggreatedEvents.count < 25 else {
-                handler(aggreatedEvents.reversed())
-                return
-            }*/
-            
-            // Recursively fetch the next events
-            self.fetchFBEvents(upcomingEvents: aggreatedEvents, afterPageCursor: after, handler: handler)
-        }
-    }
-    
     // MARK - Vendors
     func fetchVendors(handler: ((JSONObjectArray) -> Void)? = nil) {
         let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
@@ -215,7 +155,9 @@ class OTGManager {
     }
     
     // MARK - Markets
-    func fetchMarkets(handler: ((JSONObjectArray) -> Void)? = nil) {
+    
+    /* Deprecated */
+    func fetchMarketsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
         let marketsUrl = OffTheGrid.Urls.Markets.rawValue
         let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
                       Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
@@ -229,6 +171,18 @@ class OTGManager {
             // Cache the markets
             PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
             handler?(markets)
+        })
+    }
+    
+    func fetchMarkets(handler: @escaping (JSONObjectArray) -> Void) {
+        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
+        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
+                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
+                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
+        
+        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
+            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+            handler(markets)
         })
     }
     
@@ -253,13 +207,7 @@ class OTGManager {
         var marketsJSONMap = JSONObjectMapping()
         
         // Fetch: All Markets
-        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
-        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
-                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
-                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
-        
-        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
-            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+        self.fetchMarkets { markets in
             let marketIds = markets.flatMap({ ($0["Market"] as? JSONObject)?["id"] as? String })
             let marketUrls = marketIds.map({ OffTheGrid.Urls.Partial.MarketDetails + "\($0).json" })
             
@@ -277,13 +225,28 @@ class OTGManager {
                         }
                         
                         if let mediaJSON = marketObject[Constants.Keys.media] {
-                             marketJSON[Constants.Keys.media] = mediaJSON
+                            marketJSON[Constants.Keys.media] = mediaJSON
                         }
                     }
                     
                     // Remove unneeded data - reduce memory footprint
                     marketJSON.removeValue(forKey: Constants.Keys.amenitities)
                     marketJSON.removeValue(forKey: Constants.Keys.news)
+                    
+                    // Add relational-mappings to the market JSON
+                    if let eventsJSON = marketJSON[Constants.Keys.events] as? JSONObjectArray {
+                        
+                        // Map all the Market's events
+                        var eventsJSONMap = JSONObjectMapping()
+                        eventsJSON.forEach({ json in
+                            if let eventId = (json[Constants.Keys.event] as? JSONObject)?[Constants.Keys.id] as? String {
+                                eventsJSONMap[eventId] = json
+                            }
+                        })
+                        
+                        // Add the custom mapping to the Event's JSON
+                        marketJSON[Constants.CustomKeys.eventIdEventJSONMapKey] = eventsJSONMap as AnyObject
+                    }
                     
                     // Map the Market JSON
                     marketsJSONMap[marketId] = marketJSON
@@ -296,6 +259,6 @@ class OTGManager {
                 // Return the batched Markets' JSON
                 handler(marketsJSON, marketsJSONMap)
             })
-        })
+        }
     }
 }
