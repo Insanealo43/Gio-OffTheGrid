@@ -11,6 +11,7 @@ import DataCache
 
 class CachingManager {
     static let sharedInstance = CachingManager()
+    internal let pastVendorEventsMap = JSONObjectArrayMapping()
     
     public enum CacheKeys {
         static let markets = "Markets"
@@ -18,6 +19,10 @@ class CachingManager {
         static let detailedMarketsMap = "DetailedMarketsMapping"
         static let vendors = "Vendors"
         static let vendorEventsMap = "VendorEventsMapping"
+    }
+    
+    internal enum PrivateKeys {
+        static let pastEvents = "pastVendorEvents"
     }
     
     internal enum Constants {
@@ -118,7 +123,17 @@ class CachingManager {
         self.saveJSON(json: json, with: cacheKey)
     }
     
-    // MARK - (JSONObject <-> Data) Conversions
+    // MARK - Cache Updating
+    func refreshEventsCache() {
+        // Scan the cached upcoming events and move past events into the private cache
+        
+    }
+    
+    internal func scanCachedUpcomingEvents() {
+        
+    }
+    
+    // MARK - DataCache (JSONObject <-> Data) Conversions
     internal func convertToData(from json: JSONObject) -> Data? {
         do {
             return try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)

@@ -295,6 +295,9 @@ class OTGManager {
                 CachingManager.sharedInstance.saveJSONObjectArrayMap(jsonObjectArrayMap: self.vendorEventsMap, with: CachingManager.CacheKeys.vendorEventsMap)
                 
                 print("OTGManager: Cached current OffTheGrid data!")
+                
+                // Update Cache for new OffTheGrid data
+                CachingManager.sharedInstance.refreshEventsCache()
             }
         })
     }
@@ -353,12 +356,6 @@ class OTGManager {
                             // Add new, matching event for current vendor, and update the mapping
                             eventsForVendor.append(event)
                             vendorEventsMap[vendorId] = eventsForVendor
-                            
-                            /*if let eventData = event[Constants.Keys.event] as? JSONObject {
-                                // Add new, matching event for current vendor, and update the mapping
-                                eventsForVendor.append(eventData)
-                                vendorEventsMap[vendorId] = eventsForVendor
-                            }*/
                         }
                     }
                 })
@@ -392,5 +389,30 @@ class OTGManager {
         })
         
         return allVendorsEventsMap
+    }
+    
+    func constructDateFromEvent(event:JSONObject?) -> Date? {
+        let eventData = event?[OTGManager.Constants.Keys.event]
+        let monthDay = eventData?[OTGManager.Constants.Keys.monthDay] as? String
+        let components = monthDay?.components(separatedBy: ".")
+        
+        let monthInt = Int(components?.first ?? "") ?? -1
+        let dayInt = Int(components?.last ?? "") ?? -1
+        let date = DateComponents.localComponents.date(monthInt: monthInt, dayInt: dayInt)
+        
+        return date
+    }
+    
+    func filterPastVendorEvents(events:JSONObjectArray) -> JSONObjectArray {
+        let currentDate = Calendar.current.startOfDay(for: Date())
+        
+        var pastEvents = events.filter({ event in
+            let eventDate = self.constructDateFromEvent(event: event)
+            let numDaysSince = eventDate?.numberDaysUpTo(futureDate: currentDate) ?? 1
+
+            return numDaysSince > 0 && numDaysSince <= 30
+        })
+        
+        return pastEvents
     }
 }

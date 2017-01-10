@@ -22,7 +22,9 @@ class VendorCollectionViewCell: UICollectionViewCell {
             
             if let vendorId = newValue?[OTGManager.Constants.Keys.id] as? String {
                 if let vendorEvents = OTGManager.sharedInstance.vendorEventsMap[vendorId] {
-                    self.eventCountLabel.text = String(vendorEvents.count)
+                    DispatchQueue.main.async {
+                        self.eventCountLabel.text = String(vendorEvents.count)
+                    }
                 }
             }
 

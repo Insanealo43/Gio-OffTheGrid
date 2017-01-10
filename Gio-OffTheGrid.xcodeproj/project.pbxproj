@@ -174,9 +174,9 @@
 		495049F71E23B78100FF23A5 /* TableViews */ = {
 			isa = PBXGroup;
 			children = (
-				495049E91E2367CA00FF23A5 /* EventTableViewCell.swift */,
 				495049EE1E239F5A00FF23A5 /* MarketHeaderTableViewCell.swift */,
 				495049F01E23A55900FF23A5 /* MarketEventTableViewCell.swift */,
+				495049E91E2367CA00FF23A5 /* EventTableViewCell.swift */,
 			);
 			name = TableViews;
 			sourceTree = "<group>";
