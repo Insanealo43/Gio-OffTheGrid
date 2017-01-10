@@ -435,7 +435,7 @@
             </objects>
             <point key="canvasLocation" x="750" y="406"/>
         </scene>
-        <!--Vendor Events View Controller-->
+        <!--Past Events-->
         <scene sceneID="0oi-Sv-2ct">
             <objects>
                 <viewController storyboardIdentifier="VendorEventsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Al-k7-MLh" customClass="VendorEventsViewController" customModule="Gio_OffTheGrid" customModuleProvider="target" sceneMemberID="viewController">
@@ -533,6 +533,7 @@
                             <constraint firstItem="wWc-a8-lPT" firstAttribute="centerX" secondItem="NLr-a8-X2E" secondAttribute="centerX" id="s2z-e3-ZkF"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Past Events" id="kMA-mb-6dz"/>
                     <connections>
                         <outlet property="tableView" destination="wWc-a8-lPT" id="hqX-hT-7he"/>
                     </connections>
