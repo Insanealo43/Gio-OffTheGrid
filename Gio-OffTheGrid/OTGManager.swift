@@ -64,6 +64,8 @@ class OTGManager {
             static let amenitities = "Amenities"
             static let media = "Media"
             static let news = "News"
+            static let hours = "hours"
+            static let amPm = "am_pm"
         }
         
         enum CustomKeys {

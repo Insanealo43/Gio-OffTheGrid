@@ -34,4 +34,8 @@ extension VendorEventsViewController: UITableViewDataSource, UITableViewDelegate
         
         return eventCell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

@@ -16,22 +16,24 @@ class EventTableViewCell: UITableViewCell {
     
     var event: JSONObject? {
         willSet {
-            let dateString = newValue?["start_time"] as? String
-            let isoDate = dateString?.isoDate
+            let eventData = newValue?[OTGManager.Constants.Keys.event]
+            let monthDay = eventData?[OTGManager.Constants.Keys.monthDay] as? String
+            let components = monthDay?.components(separatedBy: ".")
             
-            monthLabel.text = isoDate?.monthAbbrevation
-            dayLabel.text = isoDate?.dayNumber
-            nameLabel.text = newValue?["name"] as? String
+            let monthInt = Int(components?.first ?? "") ?? -1
+            let dayInt = Int(components?.last ?? "") ?? -1
+            let date = DateComponents.localComponents.date(monthInt: monthInt, dayInt: dayInt)
             
-            var components = [String]()
-            if let timeString = isoDate?.eventTime {
-                components.append(timeString)
-            }
-            if let eventInfo = newValue?["description"] as? String {
-                components.append(eventInfo)
-            }
+            self.monthLabel.text = date?.monthAbbrevation
+            self.dayLabel.text = components?.last
             
-            infoLabel.text = components.joined(separator: " · ")
+            let hours = (eventData?[OTGManager.Constants.Keys.hours] as? String) ?? ""
+            let period = ((eventData?[OTGManager.Constants.Keys.amPm]) as? String ?? "").lowercased()
+            let timeComponents = [hours, period]
+            self.nameLabel.text = timeComponents.joined(separator: " ")
+            
+            let id = (eventData?[OTGManager.Constants.Keys.id] as? String) ?? ""
+            self.infoLabel.text = "Event Id: \(id)"
         }
     }
 }
