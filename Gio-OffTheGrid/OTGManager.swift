@@ -59,6 +59,7 @@ class OTGManager {
             static let monthDay = "month_day"
             static let marketDetail = "MarketDetail"
             static let market = "Market"
+            static let marketId = "market_id"
             static let amenitities = "Amenities"
             static let media = "Media"
             static let news = "News"
@@ -175,6 +176,7 @@ class OTGManager {
         
         NetworkManager.sharedInstance.request(url: marketUrl, handler: { response in
             let details = response?[Constants.Keys.marketDetail] as? JSONObject
+            
             /*let marketJSON = details?[Constants.Keys.market] as? JSONObject
             
             if let marketInfo = marketJSON?[Constants.Keys.market] as? JSONObject,
@@ -250,6 +252,46 @@ class OTGManager {
                 // Return the batched Markets' JSON
                 handler(marketsJSON, marketsJSONMap)
             })
+        }
+    }
+    
+    internal func transposeMarketDetail(json: JSONObject) -> JSONObject? {
+        if var marketJSON = json[Constants.Keys.marketDetail] as? JSONObject {
+            
+            // Extract needed market object JSON and flatten the dictionary
+            if let marketObject = marketJSON[Constants.Keys.market] as? JSONObject {
+                if let innerMarketJSON = marketObject[Constants.Keys.market] {
+                    marketJSON[Constants.Keys.market] = innerMarketJSON
+                }
+                
+                if let mediaJSON = marketObject[Constants.Keys.media] {
+                    marketJSON[Constants.Keys.media] = mediaJSON
+                }
+            }
+            
+            // Remove unneeded data - reduce memory footprint
+            marketJSON.removeValue(forKey: Constants.Keys.amenitities)
+            marketJSON.removeValue(forKey: Constants.Keys.news)
+            
+            // Add relational-mappings to the market JSON
+            if let eventsJSON = marketJSON[Constants.Keys.events] as? JSONObjectArray {
+                
+                // Map all the Market's events
+                var eventsJSONMap = JSONObjectMapping()
+                eventsJSON.forEach({ json in
+                    if let eventId = (json[Constants.Keys.event] as? JSONObject)?[Constants.Keys.id] as? String {
+                        eventsJSONMap[eventId] = json
+                    }
+                })
+                
+                // Add the custom mapping to the Event's JSON
+                marketJSON[Constants.CustomKeys.eventIdEventJSONMapKey] = eventsJSONMap as AnyObject
+            }
+            
+            return marketJSON
+            
+        } else {
+            return nil
         }
     }
     

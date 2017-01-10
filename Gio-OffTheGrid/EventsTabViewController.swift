@@ -45,7 +45,7 @@ class EventsTabViewController: UIViewController {
         if segue.identifier == Constants.vendorsSegueId {
             if let eventVendorsController = segue.destination as? EventVendorsViewController {
                 if let marketEvent = sender as? JSONObject {
-                    eventVendorsController.marketEvent = marketEvent
+                    eventVendorsController.event = marketEvent
                 }
             }
         }

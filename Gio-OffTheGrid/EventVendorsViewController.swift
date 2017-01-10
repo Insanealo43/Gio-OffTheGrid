@@ -9,9 +9,21 @@
 import UIKit
 
 class EventVendorsViewController: UIViewController {
+    internal enum Constants {
+        static let vendorCellId = "vendorCell"
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
-    internal var eventId: String?
+    var event:JSONObject?
+    var vendors = JSONObjectArray()
+    
+    internal var eventId:String? {
+        get { return event?[OTGManager.Constants.Keys.id] as? String }
+    }
+    
+    
+    /*internal var eventId: String?
     var marketEvent: JSONObject? {
         willSet {
             eventId = newValue?["id"] as? String
@@ -35,16 +47,17 @@ class EventVendorsViewController: UIViewController {
                 }
             })
         }
-    }
+    }*/
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let marketId = marketEvent?["market_id"] as? String {
+        if let marketId = event?["market_id"] as? String {
             self.showHUD()
             OTGManager.sharedInstance.fetchMarketDetails(id: marketId, handler: { details in
+                print("DetailedMarketFetched: \(details!)")
+                
                 self.hideHUD()
-                self.marketDetails = details
                 self.collectionView.reloadData()
             })
         }
@@ -62,7 +75,7 @@ extension EventVendorsViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vendorCell", for: indexPath) as! EventVendorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.vendorCellId, for: indexPath) as! EventVendorCollectionViewCell
         cell.vendor = self.vendors[indexPath.row]
         
         return cell
