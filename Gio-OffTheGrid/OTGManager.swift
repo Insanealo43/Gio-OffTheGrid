@@ -339,8 +339,9 @@ class OTGManager {
     func vendorEventsMapForMarket(market:JSONObject) -> JSONObjectArrayMapping {
         var vendorEventsMap = JSONObjectArrayMapping()
         let marketEvents = self.eventsForMarket(market: market)
+        
         marketEvents.forEach({ event in
-            if let eventId = event[Constants.Keys.id] as? String {
+            if let eventId = (event[Constants.Keys.event] as? JSONObject)?[Constants.Keys.id] as? String {
                 let vendors = self.vendorsForEvent(event: event)
                 vendors.forEach({ vendor in
                     if let vendorId = vendor[Constants.Keys.id] as? String {
