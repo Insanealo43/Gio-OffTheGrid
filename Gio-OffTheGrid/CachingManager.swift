@@ -17,6 +17,7 @@ class CachingManager {
         static let detailedMarkets = "DetailedMarkets"
         static let detailedMarketsMap = "DetailedMarketsMapping"
         static let vendors = "Vendors"
+        static let vendorEventsMap = "VendorEventsMapping"
     }
     
     internal enum Constants {
@@ -49,6 +50,15 @@ class CachingManager {
         return nil
     }
     
+    func loadJSONObjectArrayMap(from cacheKey:String) -> JSONObjectArrayMapping? {
+        if let data = DataCache.instance.readData(forKey: cacheKey) {
+            if let json = self.convertToJSON(from: data) {
+                return json[cacheKey] as? JSONObjectArrayMapping
+            }
+        }
+        return nil
+    }
+    
     func loadFromCache() {
         self.loadCachedMarkets()
         self.loadCachedDetailedMarkets()
@@ -56,25 +66,31 @@ class CachingManager {
         self.loadCachedVendors()
     }
     
-    internal func loadCachedMarkets() {
+    func loadCachedMarkets() {
         if let markets = self.loadJSONArray(from: CacheKeys.markets) {
             OTGManager.sharedInstance.markets = markets
         }
     }
     
-    internal func loadCachedDetailedMarkets() {
+    func loadCachedDetailedMarkets() {
         if let detailedMarkets = self.loadJSONArray(from: CacheKeys.detailedMarkets) {
             OTGManager.sharedInstance.detailedMarkets = detailedMarkets
         }
     }
     
-    internal func loadCachedDetailedMarketsMap() {
+    func loadCachedDetailedMarketsMap() {
         if let detailedMarketsMap = self.loadJSONMap(from: CacheKeys.detailedMarketsMap) {
             OTGManager.sharedInstance.detailedMarketsMap = detailedMarketsMap
         }
     }
     
-    internal func loadCachedVendors() {
+    func loadCachedVendorEventsMap() {
+        if let vendorEventsMap = self.loadJSONObjectArrayMap(from: CacheKeys.vendorEventsMap) {
+            OTGManager.sharedInstance.vendorEventsMap = vendorEventsMap
+        }
+    }
+    
+    func loadCachedVendors() {
         if let vendors = self.loadJSONArray(from: CacheKeys.vendors) {
             OTGManager.sharedInstance.vendors = vendors
         }
@@ -94,6 +110,11 @@ class CachingManager {
     
     func saveJSONMap(jsonMap:JSONObjectMapping, with cacheKey:String) {
         let json = [cacheKey: jsonMap as AnyObject]
+        self.saveJSON(json: json, with: cacheKey)
+    }
+    
+    func saveJSONObjectArrayMap(jsonObjectArrayMap:JSONObjectArrayMapping, with cacheKey:String) {
+        let json = [cacheKey: jsonObjectArrayMap as AnyObject]
         self.saveJSON(json: json, with: cacheKey)
     }
     

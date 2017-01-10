@@ -12,6 +12,7 @@ import Alamofire
 typealias JSONObject = [String:AnyObject]
 typealias JSONObjectArray = [JSONObject]
 typealias JSONObjectMapping = [String:JSONObject]
+typealias JSONObjectArrayMapping = [String:JSONObjectArray]
 
 typealias EmptyClosure = (() -> Void)
 

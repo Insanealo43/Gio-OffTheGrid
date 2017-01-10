@@ -82,7 +82,7 @@ class OTGManager {
     var detailedMarkets = JSONObjectArray()
     var detailedMarketsMap = JSONObjectMapping()
     var vendors = JSONObjectArray()
-    
+    var vendorEventsMap = JSONObjectArrayMapping()
 
     // MARK - Markets
     func fetchMarkets(handler: @escaping (JSONObjectArray) -> Void) {
@@ -151,6 +151,9 @@ class OTGManager {
                 // Save detailed markets locally
                 self.detailedMarkets = marketsJSON
                 self.detailedMarketsMap = marketsJSONMap
+                
+                // Save the vendors to events mapping
+                self.vendorEventsMap = self.vendorEventsMapForMarkets(markets: marketsJSON)
                 
                 // Post DetailedMarketsFetched Notification
                 let notificationName = Notification.Name(Constants.Notifications.DetailedMarketsFetched)
@@ -234,6 +237,16 @@ class OTGManager {
     }
     
     // MARK - Caching
+    func loadCachedOffTheGridData() {
+        let cacheManager = CachingManager.sharedInstance
+        
+        cacheManager.loadCachedMarkets()
+        cacheManager.loadCachedDetailedMarkets()
+        cacheManager.loadCachedDetailedMarketsMap()
+        cacheManager.loadCachedVendors()
+        cacheManager.loadCachedVendorEventsMap()
+    }
+    
     func fetchOffTheGridData(cacheData:Bool = true) {
         print("OTGManager: Began fetching new OffTheGrid Data...")
         let group = DispatchGroup()
@@ -275,10 +288,100 @@ class OTGManager {
                 CachingManager.sharedInstance.saveJSONArray(jsonArray: self.detailedMarkets, with: CachingManager.CacheKeys.detailedMarkets)
                 CachingManager.sharedInstance.saveJSONMap(jsonMap: self.detailedMarketsMap, with: CachingManager.CacheKeys.detailedMarketsMap)
                 
-                // Cache the vendors
+                // Cache the vendors and their event mappings
                 CachingManager.sharedInstance.saveJSONArray(jsonArray: self.vendors, with: CachingManager.CacheKeys.vendors)
+                CachingManager.sharedInstance.saveJSONObjectArrayMap(jsonObjectArrayMap: self.vendorEventsMap, with: CachingManager.CacheKeys.vendorEventsMap)
+                
                 print("OTGManager: Cached current OffTheGrid data!")
             }
         })
+    }
+    
+    // MARK - Helpers
+    func eventsForMarket(market:JSONObject) -> JSONObjectArray {
+        let events = (market[Constants.Keys.events] as? JSONObjectArray) ?? JSONObjectArray()
+        return events
+    }
+    
+    func eventsForMarkets(markets:JSONObjectArray) -> JSONObjectArray {
+        let allEvents = markets.map({ self.eventsForMarket(market: $0) }).reduce([], +)
+        return allEvents
+    }
+    
+    func eventsForVendorId(id:String, markets inMarkets:JSONObjectArray) -> JSONObjectArray {
+        let marketEvents = self.eventsForMarkets(markets: markets)
+        let vendorEvents:JSONObjectArray = marketEvents.flatMap({ event in
+            var eventMatch:JSONObject? = nil
+            let eventVendors = event[Constants.Keys.vendors] as? JSONObjectArray
+            eventVendors?.forEach({ vendor in
+                let vendorId = vendor[Constants.Keys.id] as? String
+                if id == vendorId {
+                    eventMatch = event
+                }
+            })
+            
+            return eventMatch
+        })
+        
+        return vendorEvents
+    }
+    
+    func eventsForVendor(vendorId: String) ->JSONObjectArray {
+        let events = self.eventsForVendorId(id: vendorId, markets: self.detailedMarkets)
+        return events
+    }
+    
+    func vendorsForEvent(event:JSONObject) -> JSONObjectArray {
+        let vendors = event[Constants.Keys.vendors] as? JSONObjectArray
+        return vendors ?? JSONObjectArray()
+    }
+    
+    func vendorEventsMapForMarket(market:JSONObject) -> JSONObjectArrayMapping {
+        var vendorEventsMap = JSONObjectArrayMapping()
+        let marketEvents = self.eventsForMarket(market: market)
+        marketEvents.forEach({ event in
+            if let eventId = event[Constants.Keys.id] as? String {
+                let vendors = self.vendorsForEvent(event: event)
+                vendors.forEach({ vendor in
+                    if let vendorId = vendor[Constants.Keys.id] as? String {
+                        var eventsForVendor = (vendorEventsMap[vendorId]) ?? JSONObjectArray()
+                        let eventIds = eventsForVendor.flatMap({ $0[Constants.Keys.id] as? String })
+                        if eventIds.index(of: eventId) == nil {
+                            // Add new, matching event for current vendor, and update the mapping
+                            eventsForVendor.append(event)
+                            vendorEventsMap[vendorId] = eventsForVendor
+                        }
+                    }
+                })
+            }
+        })
+        
+        return vendorEventsMap
+    }
+    
+    func vendorEventsMapForMarkets(markets:JSONObjectArray) -> JSONObjectArrayMapping {
+        var allVendorsEventsMap = JSONObjectArrayMapping()
+        
+        // Get all the vendor->events maps
+        let vendorEventsMaps:[JSONObjectArrayMapping] = markets.flatMap({ market in
+            return self.vendorEventsMapForMarket(market: market)
+        })
+        
+        // Get the set of unique vendorIds
+        let vendorIds:[String] = Array(Set(vendorEventsMaps.flatMap({ vendorEventsMap in
+            return vendorEventsMap.keys
+        })))
+        
+        // Map the events for all the unique vendorIds
+        vendorIds.forEach({ id in
+            let matchingEvents = vendorEventsMaps.flatMap({ vendorEventsMap in
+                return vendorEventsMap[id]
+            }).reduce([], +)
+            
+            // Map the events its vendor
+            allVendorsEventsMap[id] = matchingEvents
+        })
+        
+        return allVendorsEventsMap
     }
 }

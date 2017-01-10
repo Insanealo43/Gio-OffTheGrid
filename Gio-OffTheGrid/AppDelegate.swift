@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Load data from the local cache
-        CachingManager.sharedInstance.loadFromCache()
+        OTGManager.sharedInstance.loadCachedOffTheGridData()
         
         // Fetch and cache up-to-date OffTheGrid data
         OTGManager.sharedInstance.fetchOffTheGridData()
