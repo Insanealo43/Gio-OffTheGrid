@@ -76,7 +76,7 @@ class OTGManager {
         }
     }
     
-    var eventMarketMap = JSONObjectMapping()
+    /*var eventMarketMap = JSONObjectMapping()
     var upcomingEvents = JSONObjectArray() {
         willSet {
             /*print("Upcoming Events(\(newValue.count)): \(newValue)")
@@ -85,8 +85,12 @@ class OTGManager {
         }
     }
     
-    var marketDetailsMap = JSONObjectMapping()
-    var markets = JSONObjectArray() {
+    var marketDetailsMap = JSONObjectMapping()*/
+    
+    
+    var markets = JSONObjectArray()
+    var vendors = JSONObjectArray()
+    /*{
         willSet {
             var events = JSONObjectArray()
             var mapping = JSONObjectMapping()
@@ -130,9 +134,7 @@ class OTGManager {
             self.upcomingEvents = events
             self.eventMarketMap = mapping
         }
-    }
-    
-    var vendors = JSONObjectArray()
+    }*/
     
     
     
@@ -169,12 +171,12 @@ class OTGManager {
         
         NetworkManager.sharedInstance.request(url: marketUrl, handler: { response in
             let details = response?[Constants.Keys.marketDetail] as? JSONObject
-            let marketJSON = details?[Constants.Keys.market] as? JSONObject
+            /*let marketJSON = details?[Constants.Keys.market] as? JSONObject
             
             if let marketInfo = marketJSON?[Constants.Keys.market] as? JSONObject,
                 let marketId = marketInfo["id"] as? String {
                 self.marketDetailsMap[marketId] = details!
-            }
+            }*/
             
             handler(details)
         })

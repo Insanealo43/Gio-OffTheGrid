@@ -72,7 +72,7 @@ class PersistanceManager {
                 OTGManager.sharedInstance.markets = markets
                 
                 // Store the computed Events, derived from the local Markets
-                self.storedMarketsJSON = [CacheKeys.events: OTGManager.sharedInstance.upcomingEvents as AnyObject]
+                //self.storedMarketsJSON = [CacheKeys.events: OTGManager.sharedInstance.upcomingEvents as AnyObject]
             }
         }
     }
