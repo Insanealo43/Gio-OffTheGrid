@@ -9,7 +9,12 @@
 import UIKit
 
 class VendorsTabViewController: UIViewController {
+    internal enum Constants {
+        static let vendorCellId = "vendorCell"
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
+    
     internal var vendors: JSONObjectArray {
         get {
             return OTGManager.sharedInstance.vendors
@@ -18,20 +23,27 @@ class VendorsTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if self.vendors.count == 0 {
             self.showHUD()
-        }
-        
-        OTGManager.sharedInstance.fetchVendorsOld{ _ in
-            self.hideHUD()
-            self.collectionView.reloadData()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        if self.vendors.count == 0 {
+            let notificationName = Notification.Name(OTGManager.Constants.Notifications.VendorsFetched)
+            NotificationCenter.default.addObserver(forName: notificationName, object:OTGManager.sharedInstance, queue:nil) { notification in
+                self.hideHUD()
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -41,7 +53,7 @@ extension VendorsTabViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vendorCell", for: indexPath) as! VendorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.vendorCellId, for: indexPath) as! VendorCollectionViewCell
         cell.vendor = self.vendors[indexPath.row]
         return cell
     }
