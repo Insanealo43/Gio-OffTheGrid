@@ -251,6 +251,9 @@ class OTGManager {
         cacheManager.loadCachedDetailedMarketsMap()
         cacheManager.loadCachedVendors()
         cacheManager.loadCachedVendorEventsMap()
+        
+        // Update the cache for events that might be in the past
+        cacheManager.refreshEventsCache()
     }
     
     func fetchOffTheGridData(cacheData:Bool = true) {
@@ -302,7 +305,7 @@ class OTGManager {
             }
             
             // Update Cache for new OffTheGrid data
-            CachingManager.sharedInstance.refreshEventsCache()
+            CachingManager.sharedInstance.syncCacheData()
         })
     }
     

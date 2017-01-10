@@ -125,14 +125,17 @@ class CachingManager {
     }
     
     // MARK - Cache Updating
-    func refreshEventsCache() {
+    internal func refreshEventsCache() {
         // Scan the cached upcoming events and move past events into the private cache
-        self.scanCachedUpcomingEvents()
-    }
-    
-    internal func scanCachedUpcomingEvents() {
         let localEvents = OTGManager.sharedInstance.allEvents
         let pastEvents = OTGManager.sharedInstance.filterPastVendorEvents(events: localEvents)
+        
+        
+    }
+    
+    // MARK - Cache Sync
+    func syncCacheData() {
+        // Add new (Vendor --> Event) relations to Cache
         
     }
     
