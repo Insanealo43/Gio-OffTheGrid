@@ -29,6 +29,7 @@ public enum OffTheGrid {
 
 class OTGManager {
     static let sharedInstance = OTGManager()
+    internal let bgQueue = DispatchQueue.global(qos: .default)
     
     enum Constants {
         enum Notifications {
@@ -229,6 +230,55 @@ class OTGManager {
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
             let details = response?[Constants.Keys.vendorDetail] as? JSONObject
             handler(details ?? JSONObject())
+        })
+    }
+    
+    // MARK - Caching
+    func fetchOffTheGridData(cacheData:Bool = true) {
+        print("OTGManager: Began fetching new OffTheGrid Data...")
+        let group = DispatchGroup()
+        
+        group.enter()
+        bgQueue.async {
+            // Fetch all markets
+            OTGManager.sharedInstance.fetchMarkets { markets in
+                print("OTGManager: Fetched Markets.")
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        bgQueue.async {
+            // Fetch all detailed markets
+            OTGManager.sharedInstance.fetchDetailedMarkets { detailedMarkets, marketsMap in
+                print("OTGManager: Fetched Detailed Markets.")
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        bgQueue.async {
+            // Fetch all vendors
+            OTGManager.sharedInstance.fetchVendors { vendors in
+                print("OTGManager: Fetched Vendors.")
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.main, execute: {
+            print("OTGManager: Finished fetching new OffTheGrid Data!")
+            if cacheData {
+                // Cache the markets
+                CachingManager.sharedInstance.saveJSONArray(jsonArray: self.markets, with: CachingManager.CacheKeys.markets)
+                
+                // Cache the detailed markets and its mapping
+                CachingManager.sharedInstance.saveJSONArray(jsonArray: self.detailedMarkets, with: CachingManager.CacheKeys.detailedMarkets)
+                CachingManager.sharedInstance.saveJSONMap(jsonMap: self.detailedMarketsMap, with: CachingManager.CacheKeys.detailedMarketsMap)
+                
+                // Cache the vendors
+                CachingManager.sharedInstance.saveJSONArray(jsonArray: self.vendors, with: CachingManager.CacheKeys.vendors)
+                print("OTGManager: Cached current OffTheGrid data!")
+            }
         })
     }
 }

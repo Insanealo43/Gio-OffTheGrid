@@ -8,37 +8,19 @@
 
 import UIKit
 
-// https://offthegrid.com/otg-api/passthrough/events/334414110278817.json
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         // Load data from the local cache
         CachingManager.sharedInstance.loadFromCache()
         
-        // Fetch all markets
-        OTGManager.sharedInstance.fetchMarkets { markets in
-            // Cache the markets
-            CachingManager.sharedInstance.saveJSONArray(jsonArray: markets, with: CachingManager.CacheKeys.markets)
-        }
+        // Fetch and cache up-to-date OffTheGrid data
+        OTGManager.sharedInstance.fetchOffTheGridData()
         
-        // Fetch all detailed markets
-        OTGManager.sharedInstance.fetchDetailedMarkets { detailedMarkets, marketsMap in
-            // Cache the detailed markets and its mapping
-            CachingManager.sharedInstance.saveJSONArray(jsonArray: detailedMarkets, with: CachingManager.CacheKeys.detailedMarkets)
-            CachingManager.sharedInstance.saveJSONMap(jsonMap: marketsMap, with: CachingManager.CacheKeys.detailedMarketsMap)
-        }
-        
-        // Fetch all vendors
-        OTGManager.sharedInstance.fetchVendors { vendors in
-            // Cache the vendors
-            CachingManager.sharedInstance.saveJSONArray(jsonArray: vendors, with: CachingManager.CacheKeys.vendors)
-        }
-        
-        //PersistanceManager.sharedInstance.loadCache()
         return true
     }
 
