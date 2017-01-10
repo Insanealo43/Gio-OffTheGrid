@@ -77,69 +77,11 @@ class OTGManager {
         }
     }
     
-    /*var eventMarketMap = JSONObjectMapping()
-    var upcomingEvents = JSONObjectArray() {
-        willSet {
-            /*print("Upcoming Events(\(newValue.count)): \(newValue)")
-            print("Dates: \(newValue.map({ $0[Constants.Keys.monthDay]! }))")
-            print("Times: \(newValue.map({ $0[Constants.Keys.startTime]! }))")*/
-        }
-    }
-    
-    var marketDetailsMap = JSONObjectMapping()*/
-    
-    
     var markets = JSONObjectArray()
     var detailedMarkets = JSONObjectArray()
     var vendors = JSONObjectArray()
-    /*{
-        willSet {
-            var events = JSONObjectArray()
-            var mapping = JSONObjectMapping()
-            
-            newValue.forEach({ market in
-                if let marketEvents = market[Constants.Keys.event] as? JSONObjectArray {
-                    marketEvents.forEach({ event in
-                        events.append(event)
-                        if let id = event["id"] as? String {
-                            mapping[id] = market
-                        }
-                    })
-                }
-                
-                /* TODO: 
-                 - Async retrieve every Market's Details to aggreate 
-                 all Vendors for Events
-                 - Sync these relations with the Cache (create/update) relations
-              */
+    
 
-            })
-            
-            // Sort events by 'month_day', and then 'start_time'
-            events = events.sorted(by: { first, second in
-                if let firstDate = first[Constants.Keys.monthDay] as? String,
-                    let secondDate = second[Constants.Keys.monthDay] as? String {
-                    if firstDate != secondDate {
-                        return firstDate < secondDate
-                        
-                    } else if let firstStart = first[Constants.Keys.startTime] as? String,
-                        let secondStart = second[Constants.Keys.startTime] as? String {
-                        if firstStart != secondStart {
-                            return firstStart < secondStart
-                        }
-                    }
-                }
-                
-                return true
-            })
-            
-            self.upcomingEvents = events
-            self.eventMarketMap = mapping
-        }
-    }*/
-    
-    
-    
     // MARK - Markets
     func fetchMarkets(handler: @escaping (JSONObjectArray) -> Void) {
         let marketsUrl = OffTheGrid.Urls.Markets.rawValue
@@ -177,17 +119,6 @@ class OTGManager {
         NetworkManager.sharedInstance.request(url: marketUrl, handler: { response in
             let detailedMarket = self.transposeMarketDetail(json: response)
             handler(detailedMarket)
-            
-            //let details = response?[Constants.Keys.marketDetail] as? JSONObject
-            
-            /*let marketJSON = details?[Constants.Keys.market] as? JSONObject
-            
-            if let marketInfo = marketJSON?[Constants.Keys.market] as? JSONObject,
-                let marketId = marketInfo["id"] as? String {
-                self.marketDetailsMap[marketId] = details!
-            }*/
-            
-            //handler(details)
         })
     }
     
@@ -296,41 +227,6 @@ class OTGManager {
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
             let details = response?[Constants.Keys.vendorDetail] as? JSONObject
             handler(details ?? JSONObject())
-        })
-    }
-    
-    // MARK - Deprecated
-    func fetchMarketsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
-        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
-        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
-                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
-                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
-        
-        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
-            // Keep local copy of the markets
-            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
-            self.markets = markets
-            
-            // Cache the markets
-            PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
-            handler?(markets)
-        })
-    }
-    
-    func fetchVendorsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
-        let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
-        let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
-        
-        NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
-            // Keep local copy of the vendors
-            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                let vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
-                self.vendors = vendors
-                
-                // Cache the vendors
-                PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.vendors: vendors as AnyObject], with: CacheKeys.vendors)
-            }
-            handler?(self.vendors)
         })
     }
 }
