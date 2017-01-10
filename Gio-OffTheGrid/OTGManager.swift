@@ -36,6 +36,7 @@ class OTGManager {
             static let sortOrder = "sort-order"
             static let data = "data"
             static let vendors = "Vendors"
+            static let vendorDetail = "VendorDetail"
             static let paging = "paging"
             static let cursors = "cursors"
             static let after = "after"
@@ -86,8 +87,8 @@ class OTGManager {
                 
                 /* TODO: 
                  - Async retrieve every Market's Details to aggreate 
-                 all Vendorsfor Events
-                 - Sync these relations with the Cache (update/add) relations
+                 all Vendors for Events
+                 - Sync these relations with the Cache (create/update) relations
               */
 
             })
@@ -201,13 +202,12 @@ class OTGManager {
         })
     }
     
-    func fetchVendorDetails(id: Int, handler: (JSONObject) -> Void) {
+    func fetchVendorDetails(id: Int, handler: @escaping (JSONObject) -> Void) {
         let vendorDetailsUrl = OffTheGrid.Urls.Partial.VendorDetails + "\(id).json"
         
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
-            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                print("OTG Vendors(\(vendorsJSON.count)) JSON --> \(vendorsJSON)")
-            }
+            let details = response?[Constants.Keys.vendorDetail] as? JSONObject
+            handler(details ?? JSONObject())
         })
     }
     

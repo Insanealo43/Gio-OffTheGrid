@@ -129,8 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				495049E11E22C38600FF23A5 /* OTGManager.swift */,
-				4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */,
 				49504A011E23F07F00FF23A5 /* PersistanceManager.swift */,
+				4908EAEF1E21E7D4002BFE2D /* NetworkManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
