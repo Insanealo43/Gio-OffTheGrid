@@ -79,9 +79,9 @@ class OTGManager {
     var eventMarketMap = JSONObjectMapping()
     var upcomingEvents = JSONObjectArray() {
         willSet {
-            print("Upcoming Events(\(newValue.count)): \(newValue)")
+            /*print("Upcoming Events(\(newValue.count)): \(newValue)")
             print("Dates: \(newValue.map({ $0[Constants.Keys.monthDay]! }))")
-            print("Times: \(newValue.map({ $0[Constants.Keys.startTime]! }))")
+            print("Times: \(newValue.map({ $0[Constants.Keys.startTime]! }))")*/
         }
     }
     
@@ -137,24 +137,6 @@ class OTGManager {
     
     
     // MARK - Markets
-    func fetchMarketsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
-        /* Deprecated */
-        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
-        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
-                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
-                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
-        
-        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
-            // Keep local copy of the markets
-            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
-            self.markets = markets
-            
-            // Cache the markets
-            PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
-            handler?(markets)
-        })
-    }
-    
     func fetchMarkets(handler: @escaping (JSONObjectArray) -> Void) {
         let marketsUrl = OffTheGrid.Urls.Markets.rawValue
         let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
@@ -162,8 +144,19 @@ class OTGManager {
                       Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
         
         NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
-            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+            var markets = ((response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray())
             
+            // Normalize the Markets' JSON
+            markets = markets.flatMap({
+                var json:JSONObject = $0
+                if let eventsJSON = $0[Constants.Keys.event] {
+                    json.removeValue(forKey: Constants.Keys.event)
+                    json[Constants.Keys.events] = eventsJSON
+                }
+                return json
+            })
+            
+            // Post MarketsFetched Notification
             let notificationName = Notification.Name(Constants.Notifications.MarketsFetched)
             NotificationCenter.default.post(name: notificationName, object: self, userInfo: [Constants.Keys.markets: markets])
             
@@ -252,24 +245,6 @@ class OTGManager {
     }
     
     // MARK - Vendors
-    func fetchVendorsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
-        /* Deprecated */
-        let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
-        let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
-        
-        NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
-            // Keep local copy of the vendors
-            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
-                let vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
-                self.vendors = vendors
-                
-                // Cache the vendors
-                PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.vendors: vendors as AnyObject], with: CacheKeys.vendors)
-            }
-            handler?(self.vendors)
-        })
-    }
-    
     func fetchVendors(handler: @escaping (JSONObjectArray) -> Void) {
         let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
         let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
@@ -280,6 +255,7 @@ class OTGManager {
                 return $0[Constants.Keys.vendor] as? JSONObject
             })
             
+            // Post VendorsFetched Notification
             let notificationName = Notification.Name(Constants.Notifications.VendorsFetched)
             NotificationCenter.default.post(name: notificationName, object: self, userInfo: [Constants.Keys.vendors: vendors])
             
@@ -293,6 +269,41 @@ class OTGManager {
         NetworkManager.sharedInstance.request(url: vendorDetailsUrl, handler: { response in
             let details = response?[Constants.Keys.vendorDetail] as? JSONObject
             handler(details ?? JSONObject())
+        })
+    }
+    
+    // MARK - Deprecated
+    func fetchMarketsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
+        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
+        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
+                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
+                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
+        
+        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
+            // Keep local copy of the markets
+            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+            self.markets = markets
+            
+            // Cache the markets
+            PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.markets: markets as AnyObject], with: CacheKeys.markets)
+            handler?(markets)
+        })
+    }
+    
+    func fetchVendorsOld(handler: ((JSONObjectArray) -> Void)? = nil) {
+        let vendorsUrl = OffTheGrid.Urls.Vendors.rawValue
+        let params = [Constants.Keys.sortOrder: Constants.Values.nameAscending as AnyObject]
+        
+        NetworkManager.sharedInstance.request(url: vendorsUrl, parameters: params, handler: { response in
+            // Keep local copy of the vendors
+            if let vendorsJSON = response?[Constants.Keys.vendors] as? JSONObjectArray {
+                let vendors = Array(vendorsJSON.filter({ $0["Vendor"] is JSONObject}).map({ $0["Vendor"] as! JSONObject}))
+                self.vendors = vendors
+                
+                // Cache the vendors
+                PersistanceManager.sharedInstance.saveJSON(json: [CacheKeys.vendors: vendors as AnyObject], with: CacheKeys.vendors)
+            }
+            handler?(self.vendors)
         })
     }
 }

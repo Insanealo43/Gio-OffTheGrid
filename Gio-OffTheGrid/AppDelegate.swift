@@ -16,12 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        OTGManager.sharedInstance.fetchDetailedMarkets { markets, marketsMap in
+        OTGManager.sharedInstance.fetchMarkets { markets in
+            print("MarketsJSON: \(markets)")
+        }
+        
+        /*OTGManager.sharedInstance.fetchDetailedMarkets { markets, marketsMap in
             print("Markets(\(markets.count))")
             print("Mapped Markets(\(marketsMap.count)): \(marketsMap.values.first)")
         }
         
-        PersistanceManager.sharedInstance.loadCache()
+        PersistanceManager.sharedInstance.loadCache()*/
         return true
     }
 
