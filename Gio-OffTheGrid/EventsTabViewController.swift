@@ -24,9 +24,19 @@ class EventsTabViewController: UIViewController {
             self.showHUD()
         }
         
-        OTGManager.sharedInstance.fetchMarkets{ _ in
+        OTGManager.sharedInstance.fetchMarkets{ markets in
             self.hideHUD()
             self.tableView.reloadData()
+            
+            // Batch fetch all the market details
+            /*let marketIds = markets.flatMap({ ($0["Market"] as? JSONObject)?["id"] as? String })
+            let marketUrls = marketIds.map({ OffTheGrid.Urls.Partial.MarketDetails + "\($0).json" })
+            NetworkManager.sharedInstance.batchFetchRequest(urls: marketUrls, requestHandler: { url, response in
+                print("Request Finished: \(url)")
+                
+            }, completion: {
+                print("Finished all MarketDetail requests!!!")
+            })*/
         }
     }
     

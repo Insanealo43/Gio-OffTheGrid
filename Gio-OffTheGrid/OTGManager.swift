@@ -50,6 +50,9 @@ class OTGManager {
             static let monthDay = "month_day"
             static let marketDetail = "MarketDetail"
             static let market = "Market"
+            static let amenitities = "Amenities"
+            static let media = "Media"
+            static let news = "News"
         }
         
         enum Values {
@@ -242,6 +245,57 @@ class OTGManager {
             }
             
             handler(details)
+        })
+    }
+    
+    func fetchAllMarketDetails(handler: @escaping (_ marketsJSON:JSONObjectArray, _ marketsJSONMap:JSONObjectMapping) -> Void) {
+        var marketsJSON = JSONObjectArray()
+        var marketsJSONMap = JSONObjectMapping()
+        
+        // Fetch: All Markets
+        let marketsUrl = OffTheGrid.Urls.Markets.rawValue
+        let params = [Constants.Keys.latitude: Constants.Values.latGingerIO as AnyObject,
+                      Constants.Keys.longitude: Constants.Values.lngGingerIO as AnyObject,
+                      Constants.Keys.sortOrder: Constants.Values.distanceAscending as AnyObject]
+        
+        NetworkManager.sharedInstance.request(url: marketsUrl, parameters: params, handler: { response in
+            let markets = (response?[Constants.Keys.markets] as? JSONObjectArray) ?? JSONObjectArray()
+            let marketIds = markets.flatMap({ ($0["Market"] as? JSONObject)?["id"] as? String })
+            let marketUrls = marketIds.map({ OffTheGrid.Urls.Partial.MarketDetails + "\($0).json" })
+            
+            // Batch Fetch: All Market details (including Event/Vendor data)
+            NetworkManager.sharedInstance.batchFetchRequest(urls: marketUrls, requestHandler: { url, response in
+                
+                // Parse the marketId from the requestUrl and extract the market detail object
+                if let marketId = url.components(separatedBy: "/").last?.components(separatedBy: ".").first,
+                    var marketJSON = response?[Constants.Keys.marketDetail] as? JSONObject {
+                    
+                    // Extract needed market object JSON and flatten the dictionary
+                    if let marketObject = marketJSON[Constants.Keys.market] as? JSONObject {
+                        if let innerMarketJSON = marketObject[Constants.Keys.market] {
+                            marketJSON[Constants.Keys.market] = innerMarketJSON
+                        }
+                        
+                        if let mediaJSON = marketObject[Constants.Keys.media] {
+                             marketJSON[Constants.Keys.media] = mediaJSON
+                        }
+                    }
+                    
+                    // Remove unneeded data - reduce memory footprint
+                    marketJSON.removeValue(forKey: Constants.Keys.amenitities)
+                    marketJSON.removeValue(forKey: Constants.Keys.news)
+                    
+                    // Map the Market JSON
+                    marketsJSONMap[marketId] = marketJSON
+                }
+                
+            }, completion: {
+                // Restore the original Markets' sort order
+                marketsJSON = marketIds.flatMap({ marketsJSONMap[$0] })
+                
+                // Return the batched Markets' JSON
+                handler(marketsJSON, marketsJSONMap)
+            })
         })
     }
 }

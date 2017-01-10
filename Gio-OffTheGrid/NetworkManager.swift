@@ -17,16 +17,19 @@ typealias EmptyClosure = (() -> Void)
 
 class NetworkManager {
     static let sharedInstance = NetworkManager()
+    internal let bgQueue = DispatchQueue.global(qos: .default)
     
     func request(url:String, method:HTTPMethod? = .get, parameters:JSONObject? = [:], handler: ((JSONObject?) -> Void)? = nil) {
-        Alamofire.request(url, method: method!, parameters: parameters).validate().responseJSON { response in
-            let JSON = (response.result.value as? JSONObject ?? [:])
-            switch response.result {
-            case .failure(let error):
-                print("NetworkManager: Request Error: \(error)")
-                handler?(nil)
-            case .success:
-                handler?(JSON)
+        bgQueue.async {
+            Alamofire.request(url, method: method!, parameters: parameters).validate().responseJSON { response in
+                let JSON = (response.result.value as? JSONObject ?? [:])
+                switch response.result {
+                case .failure(let error):
+                    print("NetworkManager: Request Error: \(error)")
+                    handler?(nil)
+                case .success:
+                    handler?(JSON)
+                }
             }
         }
     }
@@ -37,9 +40,8 @@ class NetworkManager {
             return
         }
         
+        print("Performing \(urls.count) Batch Request Operations...")
         let group = DispatchGroup()
-        let bgQueue = DispatchQueue.global(qos: .default)
-        
         urls.forEach({ url in
             group.enter()
             bgQueue.async {
